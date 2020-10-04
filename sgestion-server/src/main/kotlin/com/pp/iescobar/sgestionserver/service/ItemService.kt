@@ -12,7 +12,6 @@ import javax.transaction.Transactional
 class ItemService @Autowired constructor(
         val itemRepository: ItemRepository
 ) {
-
     @Transactional
     fun getAllItems() : List<Item> = itemRepository.findAllByActive()
 

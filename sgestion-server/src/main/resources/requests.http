@@ -1,0 +1,117 @@
+###
+GET http://localhost:8080/Item/GetAll
+Content-Type: application/json
+
+###
+GET http://localhost:8080/Item/Get/1
+Content-Type: application/json
+
+###
+POST http://localhost:8080/Item/save
+Content-Type: application/json
+
+{
+  "name": "Producto 1",
+  "description": "Producto de prueba",
+  "price": 14.99
+}
+
+###
+PUT http://localhost:8080/Item/update/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Producto 1",
+  "description": "Producto de prueba",
+  "price": 14.99
+}
+
+###
+DELETE http://localhost:8080/Item/delete/1
+Content-Type: application/json
+
+
+### SALE ORDERS
+GET http://localhost:8080/SaleOrder/GetAll
+Content-Type: application/json
+
+<> 2020-10-04T054428.200.json
+<> 2020-10-04T125750.200.json
+<> 2020-10-04T125542.200.json
+<> 2020-10-04T123017.200.json
+<> 2020-10-04T122747.200.json
+<> 2020-10-04T012159.200.json
+<> 2020-10-04T125651.200.json
+
+###
+GET http://localhost:8080/SaleOrder/Get/18
+Content-Type: application/json
+
+<> 2020-10-04T053316.200.json
+<> 2020-10-04T011544.200.json
+<> 2020-10-04T011244.200.json
+<> 2020-10-04T010909.200.json
+
+###
+POST http://localhost:8080/SaleOrder/save
+Content-Type: application/json
+
+{
+  "total":  150.99,
+  "clientName": "Mostrador",
+  "clientRfc": "DHST4875L",
+  "clientBusinessName": "Venta Mostrador",
+  "employeeId": 1,
+  "employeeName": "Israel",
+  "finishDate": "2020-10-04",
+  "status": "PENDIENTE",
+  "orderLines": [
+    {
+      "itemId": 1,
+      "itemName": "Producto 1",
+      "itemPrice": 15.99,
+      "quantity": 2
+    }
+  ]
+}
+
+
+###
+PUT http://localhost:8080/SaleOrder/update/28
+Content-Type: application/json
+
+{
+  "id": 28,
+  "total": 150.99,
+  "clientName": "Mostrador EDITADO",
+  "clientRfc": "DHST4875L",
+  "clientBusinessName": "Venta Mostrador",
+  "employeeId": 1,
+  "employeeName": "Israel",
+  "finishDate": "2020-10-04T00:00:00.000+00:00",
+  "status": "PENDIENTE",
+  "orderLines": [
+    {
+      "id": 29,
+      "itemId": 1,
+      "itemName": "Producto 1 EDITADO",
+      "itemPrice": 15.99,
+      "quantity": 2
+    }
+  ],
+  "active": true,
+  "createdBy": null,
+  "createdDate": "2020-10-04T22:35:48.894+00:00",
+  "updatedBy": null,
+  "updatedDate": "2020-10-04T22:35:48.894+00:00",
+  "disabledBy": null,
+  "disabledDate": null
+}
+
+<> 2020-10-04T053829.200.json
+
+
+###
+DELETE http://localhost:8080/SaleOrder/delete/28
+Content-Type: application/json

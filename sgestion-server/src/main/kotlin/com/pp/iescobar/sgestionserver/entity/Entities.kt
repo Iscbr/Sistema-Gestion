@@ -1,55 +1,49 @@
 package com.pp.iescobar.sgestionserver.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*
 
 @Entity
-data class SaleOrder(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long,
-        var total: Double,
-        @Column(length = 250) var clientName: String,
-        @Column(length = 50) var clientRfc: String,
-        @Column(length = 250) var clientBusinessName: String,
-        var employeeId: Long,
-        @Column(length = 100) var employeeName: String,
-        var finishDate: Date,
-        @Column(length = 20) var status: String,
-        @OneToMany(mappedBy = "saleOrder")
-        var orderLines: List<SaleOrderLine>
-) : Serializable
+class SaleOrder(
+        @Id @GeneratedValue var id: Long? = null,
+        var total: Double = 0.0,
+        var clientName: String? = null,
+        var clientRfc: String? = null,
+        var clientBusinessName: String? = null,
+        var employeeId: Long? = null,
+        var employeeName: String? = null,
+        var finishDate: Date? = null,
+        var status: String? = null,
+        @OneToMany(mappedBy = "saleOrder", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        var orderLines: List<SaleOrderLine> = emptyList()
+) : Audit(), Serializable
 
 @Entity
-data class SaleOrderLine(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long,
-        var itemId: Long,
-        var itemName: String,
-        var itemPrice: Double,
-        var quantity: Int,
+class SaleOrderLine(
+        @Id @GeneratedValue var id: Long? = null,
+        var itemId: Long = -1,
+        var itemName: String = "",
+        var itemPrice: Double = 0.0,
+        var quantity: Int = 0,
         @ManyToOne
-        @JoinColumn(name = "sale_order_id", nullable = false)
-        var saleOrder: SaleOrder
+        @JoinColumn(name = "sale_order_id")
+        @JsonIgnore
+        var saleOrder: SaleOrder?
 ) : Serializable
 
 @Entity
-data class Item(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long,
+class Item(
+        @Id @GeneratedValue var id: Long? = null,
         @Column(length = 1000) var name: String,
         @Column(length = 2500) var description: String,
         var price: Double
 ) : Audit(), Serializable
 
 @Entity
-data class Users(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long,
+class Users(
+        @Id @GeneratedValue var id: Long? = null,
         @Column(length = 100) var name: String,
         @Column(length = 100) var firstName: String,
         @Column(length = 100) var secondName: String,
