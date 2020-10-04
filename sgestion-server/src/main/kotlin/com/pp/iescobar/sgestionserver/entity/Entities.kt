@@ -10,14 +10,14 @@ data class SaleOrder(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Long,
         var total: Double,
-        var clientName: String,
-        var clientRfc: String,
-        var clientBusinessName: String,
+        @Column(length = 250) var clientName: String,
+        @Column(length = 50) var clientRfc: String,
+        @Column(length = 250) var clientBusinessName: String,
         var employeeId: Long,
-        var employeeName: String,
+        @Column(length = 100) var employeeName: String,
         var finishDate: Date,
-        var status: String,
-        @OneToMany(mappedBy = "sale_order", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @Column(length = 20) var status: String,
+        @OneToMany(mappedBy = "saleOrder")
         var orderLines: List<SaleOrderLine>
 ) : Serializable
 
@@ -31,7 +31,7 @@ data class SaleOrderLine(
         var itemPrice: Double,
         var quantity: Int,
         @ManyToOne
-        @JoinColumn(name = "fk_sale_order", nullable = false, updatable = false)
+        @JoinColumn(name = "sale_order_id", nullable = false)
         var saleOrder: SaleOrder
 ) : Serializable
 
@@ -46,7 +46,7 @@ data class Item(
 ) : Audit(), Serializable
 
 @Entity
-data class User(
+data class Users(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Long,
