@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/Item")
+@CrossOrigin(origins = ["*"])
 class ItemController @Autowired constructor(
         val itemService: ItemService
 ) {

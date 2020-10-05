@@ -8,7 +8,7 @@ import { Item } from "../model/item.model";
   providedIn: "root"
 })
 export class ItemService {
-  private readonly itemServiceUrl = "http://localhost:8080/Item";
+  private readonly itemServiceUrl = "https://localhost:8443/Item";
 
   constructor(
     private httpClient: HttpClient

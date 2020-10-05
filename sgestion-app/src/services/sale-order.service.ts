@@ -8,7 +8,7 @@ import { SaleOrder } from "../model/sale-order.model";
   providedIn: "root"
 })
 export class SaleOrderService {
-  private saleOrderUrl = "http://localhost:8080/SaleOrder"
+  private saleOrderUrl = "https://localhost:8443/SaleOrder"
 
   constructor(
     private httpClient: HttpClient
