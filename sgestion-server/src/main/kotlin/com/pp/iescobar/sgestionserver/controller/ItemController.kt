@@ -30,8 +30,8 @@ class ItemController @Autowired constructor(
             @RequestBody item: Item) : ResponseEntity<Any> {
         if (item.id != id) return ResponseEntity(HttpStatus.BAD_REQUEST)
         itemService.getItemById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        val itemEdited = itemService.createOrUpdateItem(item)
-        return ResponseEntity.ok(itemEdited)
+        itemService.createOrUpdateItem(item)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
     @DeleteMapping("/delete/{id}")

@@ -30,8 +30,8 @@ class SaleOrderController @Autowired constructor(
             @RequestBody saleOrder: SaleOrder) : ResponseEntity<Any> {
         if (saleOrder.id != id) return ResponseEntity(HttpStatus.BAD_REQUEST)
         saleOrderService.getSaleOrderById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        val saleOrderEdited = saleOrderService.createOrUpdateSaleOrder(saleOrder)
-        return ResponseEntity.ok(saleOrderEdited)
+        saleOrderService.createOrUpdateSaleOrder(saleOrder)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
     @DeleteMapping("/delete/{id}")
