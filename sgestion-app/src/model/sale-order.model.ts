@@ -1,6 +1,12 @@
 import {SaleOrderLine} from "./sale-order-line.model";
 
 export class SaleOrder {
+
+  public constructor() {
+    this.orderLines = [];
+    this.total = 0;
+  }
+
   public id: string;
   public total: number;
   public clientName: string;

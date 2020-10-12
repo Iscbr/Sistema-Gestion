@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterModule, Routes} from "@angular/router";
-import {VentaListPage} from "./venta-list/venta-list.page";
-import {IonicModule} from "@ionic/angular";
+import { RouterModule, Routes } from "@angular/router";
+import { IonicModule } from "@ionic/angular";
+
+import { IonicSelectableModule } from "ionic-selectable";
+import { VentaListPage } from "./venta-list/venta-list.page";
 
 
 const routes: Routes = [
@@ -19,7 +21,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    IonicModule
+    IonicModule,
+    IonicSelectableModule
   ]
 })
 export class VentasModule { }
