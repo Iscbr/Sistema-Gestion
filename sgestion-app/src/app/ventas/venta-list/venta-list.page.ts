@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, LoadingController } from "@ionic/angular";
+import {AlertController, LoadingController, ModalController} from "@ionic/angular";
 
 import { SaleOrderService } from "../../../services/sale-order.service";
 import { ItemService } from "../../../services/item.service";
@@ -8,6 +8,7 @@ import { IonicSelectableComponent } from "ionic-selectable";
 import { SaleOrderLine } from "../../../model/sale-order-line.model";
 import { SaleOrder } from "../../../model/sale-order.model";
 import { Item } from "../../../model/item.model";
+import {FinishSalePage} from "../finish-sale/finish-sale.page";
 
 @Component({
   selector: 'app-venta-list',
@@ -19,6 +20,7 @@ export class VentaListPage implements OnInit {
   constructor(
     private loadingController: LoadingController,
     private alertController: AlertController,
+    private modalController: ModalController,
     private itemService: ItemService,
     private saleOrderService: SaleOrderService
   ) { }
@@ -92,6 +94,15 @@ export class VentaListPage implements OnInit {
     let totalTmp: number = 0;
     this.saleOrder.orderLines.forEach(line => totalTmp += line.totalLine);
     this.saleOrder.total = totalTmp;
+  }
+
+  public async finishSale() {
+    await this.modalController
+      .create({
+        component: FinishSalePage,
+        componentProps: null
+      })
+      .then(modalCreated => modalCreated.present());
   }
 
   public async searchItem(event: {

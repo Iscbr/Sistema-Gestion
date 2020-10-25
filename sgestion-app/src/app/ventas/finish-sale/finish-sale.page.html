@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button fill="clear" slot="end" color="dark" (click)="closeModal()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-button>
+    <ion-title>Finalizar venta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>Cantidad pagada: </ion-label>
+              <ion-input (ionBlur)="verifyPayment($event.target.value)"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>
+                <h1>Total por pagar</h1>
+                <h1>175.36</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item>
+              <ion-label>
+                <h1>Cambio</h1>
+                <h1>0.0</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-button
+          expand="block"
+          fill="solid"
+          shape="round"
+          color="success">
+          Terminar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

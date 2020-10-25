@@ -5,6 +5,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { IonicSelectableModule } from "ionic-selectable";
 import { VentaListPage } from "./venta-list/venta-list.page";
+import { FinishSalePage } from "./finish-sale/finish-sale.page";
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    VentaListPage
+    VentaListPage,
+    FinishSalePage
   ],
   imports: [
     RouterModule.forChild(routes),
