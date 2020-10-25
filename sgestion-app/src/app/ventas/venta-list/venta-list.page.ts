@@ -100,9 +100,20 @@ export class VentaListPage implements OnInit {
     await this.modalController
       .create({
         component: FinishSalePage,
-        componentProps: null
+        componentProps: {
+          saleOrder: this.saleOrder
+        }
       })
-      .then(modalCreated => modalCreated.present());
+      .then(componentCreated => {
+        componentCreated.present();
+        componentCreated.onDidDismiss().then(
+          dataReturned => {
+            if (dataReturned.role === "DONE") {
+              this.ngOnInit();
+            }
+          }
+        );
+      });
   }
 
   public async searchItem(event: {

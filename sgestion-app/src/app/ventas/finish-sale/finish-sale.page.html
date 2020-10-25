@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button fill="clear" slot="end" color="dark" (click)="closeModal()">
+    <ion-button fill="clear" slot="end" color="dark" (click)="closeModal('CLOSED')">
       <ion-icon name="close" slot="icon-only"></ion-icon>
     </ion-button>
     <ion-title>Finalizar venta</ion-title>
@@ -10,37 +10,38 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <ion-grid>
+      <form [formGroup]="finishSaleForm">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Cantidad pagada: </ion-label>
+                <ion-input formControlName="amountPayed" (ionBlur)="verifyPayment($event.target.value)"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label>Cantidad pagada: </ion-label>
-              <ion-input (ionBlur)="verifyPayment($event.target.value)"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>
+                  <h1>Total por pagar</h1>
+                  <h1>{{ this.currencyService.formatAmountToCurrencyString(saleOrder.total) }}</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
 
-        <ion-row>
-          <ion-col>
-            <ion-item>
-              <ion-label>
-                <h1>Total por pagar</h1>
-                <h1>175.36</h1>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-
-          <ion-col>
-            <ion-item>
-              <ion-label>
-                <h1>Cambio</h1>
-                <h1>0.0</h1>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+            <ion-col>
+              <ion-item>
+                <ion-label>
+                  <h1>Cambio</h1>
+                  <h1>{{ this.currencyService.formatAmountToCurrencyString(change) }}</h1>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </form>
     </ion-card-content>
   </ion-card>
 </ion-content>
@@ -53,7 +54,8 @@
           expand="block"
           fill="solid"
           shape="round"
-          color="success">
+          color="success"
+          (click)="finishSale()">
           Terminar
         </ion-button>
       </ion-col>
