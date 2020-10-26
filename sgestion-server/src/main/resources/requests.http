@@ -11,9 +11,9 @@ POST https://localhost:8443/Item/save
 Content-Type: application/json
 
 {
-  "name": "Producto 1",
-  "description": "Producto de prueba",
-  "price": 14.99
+  "name": "Producto 2",
+  "description": "Producto de prueba 2",
+  "price": 58.5
 }
 
 ###

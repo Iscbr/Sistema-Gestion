@@ -4,7 +4,16 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'sales',
+    pathMatch: 'full'
+  },
+  {
+    path: 'sales',
     loadChildren: () => import('./ventas/ventas.module').then( m => m.VentasModule)
+  },
+  {
+    path: 'inventory',
+    loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryModule)
   }
 ];
 

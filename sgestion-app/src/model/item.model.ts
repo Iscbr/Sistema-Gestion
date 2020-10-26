@@ -4,4 +4,5 @@ export class Item {
   public description: string;
   public price: number;
   public active: boolean;
+  public createdDate: string;
 }

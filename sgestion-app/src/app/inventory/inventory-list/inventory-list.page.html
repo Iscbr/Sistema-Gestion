@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inventario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Artículos en inventario
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ngx-datatable
+        class="material"
+        [rows]="itemsList"
+        [columns]="[{ name: 'Nombre', prop: 'name' }, { name: 'Descripción', prop: 'description' }, { name: 'Precio', prop: 'price' }, { name: 'Fecha de creación', prop: 'createdDate' }]"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        rowHeight="auto"
+        [limit]="10"
+      >
+      </ngx-datatable>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
