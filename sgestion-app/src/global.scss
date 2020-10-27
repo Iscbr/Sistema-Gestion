@@ -25,7 +25,14 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.custom-modal .modal-wrapper {
+.custom-modal-finish-sale .modal-wrapper {
+  @media screen and (min-width: 800px) {
+    --height: 33%;
+    --width: 60%;
+  }
+}
+
+.custom-modal-upload-csv .modal-wrapper {
   @media screen and (min-width: 800px) {
     --height: 60%;
     --width: 70%;

@@ -29,7 +29,7 @@
         class="bootstrap expandable"
         [rows]="itemsList"
         [columnMode]="ColumnMode.force"
-        headerHeight="auto"
+        headerHeight="50"
         footerHeight="auto"
         rowHeight="auto"
         [limit]="20"
@@ -65,7 +65,12 @@
           </ng-template>
         </ngx-datatable-column>
 
-        <ngx-datatable-column name="Nombre" prop="name" [flexGrow]="3">
+        <ngx-datatable-column prop="name" [flexGrow]="3">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              <b>Nombre</b>
+            </span>
+          </ng-template>
           <ng-template let-value="value" ngx-datatable-cell-template>
             {{ value }}
           </ng-template>
@@ -74,7 +79,7 @@
         <ngx-datatable-column prop="description" [flexGrow]="1">
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
             <span class="mobile-hidden">
-              Descripción
+              <b>Descripción</b>
             </span>
           </ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
@@ -85,7 +90,7 @@
         <ngx-datatable-column prop="price" [flexGrow]="1">
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
             <span class="mobile-hidden">
-              Precio
+              <b>Precio</b>
             </span>
           </ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
@@ -98,7 +103,7 @@
         <ngx-datatable-column prop="createdDate" [flexGrow]="1">
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
             <span class="mobile-hidden">
-              Fecha de Creación
+              <b>Fecha de Creación</b>
             </span>
           </ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>

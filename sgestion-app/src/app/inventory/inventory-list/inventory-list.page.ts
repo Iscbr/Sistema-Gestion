@@ -45,9 +45,18 @@ export class InventoryListPage implements OnInit {
       error => {
         this.uiService.showMessageAlert(
           true,
-          "",
-          "",
-          []
+          "Error al obtener artículos",
+          "Ocurrió un error al tratar de obtener los artículos, es posible que el servidor no esté disponible " +
+          "o revise su conexión a internet e inténtelo de nuevo.<br><br>ERROR: " + error.error,
+          [
+            {
+              text: "Reintentar",
+              handler: () => this.loadAllItems()
+            },
+            {
+              text: "Aceptar",
+            }
+          ]
         );
       }
     );
@@ -55,7 +64,7 @@ export class InventoryListPage implements OnInit {
 
   public async uploadCSVFile() {
     await this.modalController.create({
-      cssClass: "custom-modal",
+      cssClass: "custom-modal-upload-csv",
       component: InventoryUploadCsvPage
     })
     .then(componentCreated => {

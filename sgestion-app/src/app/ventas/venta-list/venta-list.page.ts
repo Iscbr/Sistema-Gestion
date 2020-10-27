@@ -98,6 +98,7 @@ export class VentaListPage implements OnInit {
   public async finishSale() {
     await this.modalController
       .create({
+        cssClass: "custom-modal-finish-sale",
         component: FinishSalePage,
         componentProps: {
           saleOrder: this.saleOrder
