@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ColumnMode } from "@swimlane/ngx-datatable";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 import { ModalController } from "@ionic/angular";
 
+import { UtilCurrencyService } from "../../../services/util/util-currency.service";
+import { UtilDateService } from "../../../services/util/util-date.service";
 import { UtilUiService } from "../../../services/util/util-ui.service";
 import { ItemService } from "../../../services/item.service";
 
 import { InventoryUploadCsvPage } from "../inventory-upload-csv/inventory-upload-csv.page";
 import { Item } from "../../../model/item.model";
-
 
 @Component({
   selector: 'app-inventory-list',
@@ -19,13 +20,18 @@ export class InventoryListPage implements OnInit {
   public itemsList: Item[];
   public ColumnMode = ColumnMode;
 
+  @ViewChild('itemsTable', { static: false }) itemsTable: DatatableComponent;
+
   constructor(
+    public dateService: UtilDateService,
+    public currencyService: UtilCurrencyService,
     private uiService: UtilUiService,
     private itemService: ItemService,
     private modalController: ModalController
   ) { }
 
   async ngOnInit() {
+    this.itemsList = [];
     await this.loadAllItems();
   }
 
@@ -55,6 +61,11 @@ export class InventoryListPage implements OnInit {
     .then(componentCreated => {
       componentCreated.present();
     });
+  }
+
+  public toggleExpandRow(event, row) {
+    event.preventDefault();
+    this.itemsTable.rowDetail.toggleExpandRow(row);
   }
 
 }

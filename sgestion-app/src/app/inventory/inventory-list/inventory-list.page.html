@@ -1,5 +1,9 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inventario</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="solid"
                   color="primary"
@@ -8,7 +12,6 @@
         Cargar CSV
       </ion-button>
     </ion-buttons>
-    <ion-title>Inventario</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -22,16 +25,91 @@
 
     <ion-card-content>
       <ngx-datatable
-        class="material"
+        #itemsTable
+        class="material expandable"
         [rows]="itemsList"
-        [columns]="[{ name: 'Nombre', prop: 'name' }, { name: 'Descripción', prop: 'description' }, { name: 'Precio', prop: 'price' }, { name: 'Fecha de creación', prop: 'createdDate' }]"
         [columnMode]="ColumnMode.force"
         [headerHeight]="50"
         [footerHeight]="50"
         rowHeight="auto"
-        [limit]="10"
+        [limit]="20"
       >
+
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail [rowHeight]="50">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div style="padding-left:60px; font-size:14px">
+              <div>{{ row.description }}, {{ row.price }}, {{ row.createdDate }}</div>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+
+        <!-- Column Templates -->
+        <ngx-datatable-column
+          [width]="50"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false"
+        >
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a
+              href="#"
+              [class.datatable-icon-right]="!expanded"
+              [class.datatable-icon-down]="expanded"
+              title="Expand/Collapse Row"
+              (click)="$event.preventDefault(); $event.stopPropagation(); toggleExpandRow($event, row)"
+              class="desktop-hidden"
+            >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre" prop="name" [flexGrow]="3">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="description" [flexGrow]="1">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              Descripción
+            </span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="mobile-hidden">{{ value }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="price" [flexGrow]="1">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              Precio
+            </span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="mobile-hidden">
+              {{ currencyService.formatAmountToCurrencyString(value) }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="createdDate" [flexGrow]="1">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              Fecha de Creación
+            </span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="mobile-hidden">
+              {{ dateService.parseDate(value) }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
       </ngx-datatable>
+
     </ion-card-content>
   </ion-card>
 

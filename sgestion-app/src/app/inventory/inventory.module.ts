@@ -23,7 +23,14 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
     IonicModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NgxDatatableModule.forRoot({
+      messages: {
+        emptyMessage: 'No hay información para mostrar', // Message to show when array is presented, but contains no values
+        totalMessage: 'Total', // Footer total message
+        selectedMessage: 'Seleccionado' // Footer selected message
+      }
+    }),
   ]
 })
 export class InventoryModule { }
