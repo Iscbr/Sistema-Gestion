@@ -1,5 +1,13 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="solid"
+                  color="primary"
+                  shape="round" (click)="uploadCSVFile()">
+        <ion-icon slot="start" name="cloud-upload"></ion-icon>
+        Cargar CSV
+      </ion-button>
+    </ion-buttons>
     <ion-title>Inventario</ion-title>
   </ion-toolbar>
 </ion-header>

@@ -5,6 +5,7 @@ import { IonicModule } from "@ionic/angular";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 
 import { InventoryListPage } from "./inventory-list/inventory-list.page";
+import { InventoryUploadCsvPage } from "./inventory-upload-csv/inventory-upload-csv.page";
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    InventoryListPage
+    InventoryListPage,
+    InventoryUploadCsvPage
   ],
   imports: [
     RouterModule.forChild(routes),
