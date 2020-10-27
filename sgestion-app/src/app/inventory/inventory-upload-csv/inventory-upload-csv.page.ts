@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from "@ionic/angular";
 
 import { UtilUiService } from "../../../services/util/util-ui.service";
+import { ItemService } from "../../../services/item.service";
 
 import { CsvFile } from "../../../model/csv-file.model";
 
@@ -14,9 +15,11 @@ export class InventoryUploadCsvPage implements OnInit {
 
   constructor(
     private uiService: UtilUiService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private itemService: ItemService
   ) { }
 
+  public file: File;
   public csvFile: CsvFile;
 
   ngOnInit() {
@@ -26,20 +29,42 @@ export class InventoryUploadCsvPage implements OnInit {
 
   handleFileSelect(event) {
     if (event.target.files.length === 1) {
-      const file = event.target.files[0];
+      this.file = event.target.files[0];
       const reader = new FileReader();
-      reader.readAsText(file);
+      reader.readAsText(this.file);
       reader.onload = (event: any) => {
-        this.csvFile.fileName = file.name;
-        this.csvFile.fileType = file.type;
+        this.csvFile.fileName = this.file.name;
+        this.csvFile.fileType = this.file.type;
         this.csvFile.content = event.target.result;
       }
     }
   }
 
   public async sendFileToServer() {
+    await this.uiService.showLoadingAlert("Enviando archivo...");
     if (this.csvFile.content !== '') {
-      console.log("Send to server.");
+      this.itemService.uploadFile(this.file).subscribe(
+        message => {
+          this.uiService.showMessageAlert(
+            false,
+            "Archivo cargado exitósamente",
+            message.message,
+            [
+              {
+                text: "OK",
+                handler: () => this.closeModal("DONE")
+              }
+            ]);
+        },
+        error => {
+          this.uiService.showMessageAlert(
+            false,
+            "Error al procesar el archivo",
+            "No fue posible procesar el archivo que adjuntó. <br><br>ERROR: " + error.error,
+            ["OK"]
+          );
+        }
+      );
     } else {
       await this.uiService.showMessageAlert(
         false,

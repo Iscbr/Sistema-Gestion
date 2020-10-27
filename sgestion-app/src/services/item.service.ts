@@ -42,4 +42,11 @@ export class ItemService {
     const url = this.itemServiceUrl + "/delete/" + id;
     return this.httpClient.delete<any>(url,{ headers: this.headers });
   }
+
+  public uploadFile(file: File): Observable<any> {
+    const url = this.itemServiceUrl + "/upload"
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.httpClient.post(url, formData);
+  }
 }

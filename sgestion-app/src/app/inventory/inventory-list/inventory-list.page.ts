@@ -60,6 +60,13 @@ export class InventoryListPage implements OnInit {
     })
     .then(componentCreated => {
       componentCreated.present();
+      componentCreated.onDidDismiss().then(
+        data => {
+          if (data.role === "DONE") {
+            this.ngOnInit();
+          }
+        }
+      );
     });
   }
 

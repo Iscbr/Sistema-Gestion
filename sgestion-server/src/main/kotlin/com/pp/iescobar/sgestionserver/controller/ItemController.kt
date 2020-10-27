@@ -46,16 +46,19 @@ class ItemController @Autowired constructor(
 
     @PostMapping("/upload")
     fun uploadFile(@RequestParam("file") file: MultipartFile): ResponseEntity<Any> {
-        if (!file.contentType.equals("text/csv"))
-            return ResponseEntity.badRequest().body("Solo se permiten archivos CSV.")
+        val response = HashMap<String,Any>()
         val itemsCount: Int
+        if (!file.contentType.equals("text/csv")) {
+            response["message"] = "Solo se permiten archivos CSV."
+            return ResponseEntity(response, HttpStatus.BAD_REQUEST)
+        }
         try {
             itemsCount = itemService.processItemsInFile(file)
         } catch (ex: RuntimeException) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al procesar archivo ${file.originalFilename}: ${ex.message}")
+            response["message"] = "Error al procesar archivo ${file.originalFilename}: ${ex.message}"
+            return ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR)
         }
-        return ResponseEntity.ok("Archivo cargado exitósamente, se guardaron $itemsCount atículos.")
+        response["message"] = "Archivo cargado exitósamente, se guardaron $itemsCount atículos."
+        return ResponseEntity.ok(response)
     }
 }
