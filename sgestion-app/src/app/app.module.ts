@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
-import { CurrencyPipe } from "@angular/common";
+import { CommonModule, CurrencyPipe } from "@angular/common";
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
   entryComponents: [],
   imports: [
     HttpClientModule,
+    CommonModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule

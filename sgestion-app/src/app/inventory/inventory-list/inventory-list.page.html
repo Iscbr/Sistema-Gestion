@@ -26,11 +26,11 @@
     <ion-card-content>
       <ngx-datatable
         #itemsTable
-        class="material expandable"
+        class="bootstrap expandable"
         [rows]="itemsList"
         [columnMode]="ColumnMode.force"
-        [headerHeight]="50"
-        [footerHeight]="50"
+        headerHeight="auto"
+        footerHeight="auto"
         rowHeight="auto"
         [limit]="20"
       >
