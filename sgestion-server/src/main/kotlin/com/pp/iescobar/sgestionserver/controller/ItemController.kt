@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import java.lang.RuntimeException
 
 @RestController
 @RequestMapping("/Item")
@@ -40,5 +42,20 @@ class ItemController @Autowired constructor(
         val item = itemService.getItemById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
         itemService.deleteItem(item)
         return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
+
+    @PostMapping("/upload")
+    fun uploadFile(@RequestParam("file") file: MultipartFile): ResponseEntity<Any> {
+        if (!file.contentType.equals("text/csv"))
+            return ResponseEntity.badRequest().body("Solo se permiten archivos CSV.")
+        val itemsCount: Int
+        try {
+            itemsCount = itemService.processItemsInFile(file)
+        } catch (ex: RuntimeException) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar archivo ${file.originalFilename}: ${ex.message}")
+        }
+        return ResponseEntity.ok("Archivo cargado exitósamente, se guardaron $itemsCount atículos.")
     }
 }
