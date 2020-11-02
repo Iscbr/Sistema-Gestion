@@ -25,9 +25,9 @@ const routes: Routes = [
     IonicModule,
     NgxDatatableModule.forRoot({
       messages: {
-        emptyMessage: 'No hay información para mostrar', // Message to show when array is presented, but contains no values
-        totalMessage: 'Total', // Footer total message
-        selectedMessage: 'Seleccionado' // Footer selected message
+        emptyMessage: 'No hay información para mostrar',
+        totalMessage: 'Total',
+        selectedMessage: 'Seleccionado'
       }
     }),
   ]
