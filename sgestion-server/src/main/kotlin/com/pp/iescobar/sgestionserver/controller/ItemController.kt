@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.lang.RuntimeException
+import java.util.*
+import java.util.function.Consumer
+import kotlin.collections.HashMap
 
 @RestController
 @RequestMapping("/Item")
@@ -19,10 +22,9 @@ class ItemController @Autowired constructor(
     fun getAllItems() : List<Item> = itemService.getAllItems()
 
     @GetMapping("/Get/{id}")
-    fun getItemById(@PathVariable("id") id: Long) : ResponseEntity<Any> {
-        val item = itemService.getItemById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        return ResponseEntity.ok(item)
-    }
+    fun getItemById(@PathVariable("id") id: Long) : ResponseEntity<Any> =
+            itemService.getItemById(id)?.let { return ResponseEntity.ok(it) } ?: ResponseEntity(HttpStatus.NOT_FOUND)
+
 
     @PostMapping("/save")
     fun createItem(@RequestBody item: Item) : Item = itemService.createOrUpdateItem(item)
@@ -32,17 +34,18 @@ class ItemController @Autowired constructor(
             @PathVariable("id") id: Long,
             @RequestBody item: Item) : ResponseEntity<Any> {
         if (item.id != id) return ResponseEntity(HttpStatus.BAD_REQUEST)
-        itemService.getItemById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        itemService.createOrUpdateItem(item)
-        return ResponseEntity(HttpStatus.NO_CONTENT)
+        itemService.getItemById(id)?.let {
+            itemService.createOrUpdateItem(it)
+            return ResponseEntity(HttpStatus.OK)
+        } ?: return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 
     @DeleteMapping("/delete/{id}")
-    fun deleteItem(@PathVariable("id") id: Long) : ResponseEntity<Any> {
-        val item = itemService.getItemById(id) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-        itemService.deleteItem(item)
-        return ResponseEntity(HttpStatus.NO_CONTENT)
-    }
+    fun deleteItem(@PathVariable("id") id: Long) : ResponseEntity<Any> =
+            itemService.getItemById(id)?.let {
+                itemService.deleteItem(it)
+                return ResponseEntity(HttpStatus.OK)
+        } ?: ResponseEntity(HttpStatus.NOT_FOUND)
 
     @PostMapping("/upload")
     fun uploadFile(@RequestParam("file") file: MultipartFile): ResponseEntity<Any> {

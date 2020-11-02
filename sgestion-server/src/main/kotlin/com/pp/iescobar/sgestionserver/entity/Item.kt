@@ -11,5 +11,6 @@ class Item(
         @Id @GeneratedValue var id: Long? = null,
         @Column(length = 1000) var name: String,
         @Column(length = 2500) var description: String,
-        var price: Double
+        var price: Double,
+        var stock: Int
 ) : Audit(), Serializable

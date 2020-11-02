@@ -3,7 +3,7 @@ GET https://localhost:8443/Item/GetAll
 Content-Type: application/json
 
 ###
-GET https://localhost:8443/Item/Get/1
+GET https://localhost:8443/Item/Get/75
 Content-Type: application/json
 
 ###
@@ -13,7 +13,8 @@ Content-Type: application/json
 {
   "name": "Producto 2",
   "description": "Producto de prueba 2",
-  "price": 58.5
+  "price": 58.5,
+  "stock": 50
 }
 
 ###
@@ -68,8 +69,8 @@ Content-Type: application/json
   "status": "PENDIENTE",
   "orderLines": [
     {
-      "itemId": 1,
-      "itemName": "Producto 1",
+      "itemId": 75,
+      "itemName": "Producto 2",
       "itemPrice": 15.99,
       "quantity": 2
     }

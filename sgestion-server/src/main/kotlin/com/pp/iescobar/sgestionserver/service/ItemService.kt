@@ -45,11 +45,16 @@ class ItemService @Autowired constructor(
             val itemsList = ArrayList<Item>()
             var item: Item
             csvParser.records.forEach {
-                item = Item(name = it.get("nombre"), description = it.get("descripcion"), price = it.get("precio").toDouble())
+                item = Item(
+                        name = it.get("nombre"),
+                        description = it.get("descripcion"),
+                        price = it.get("precio").toDoubleOrNull() ?: 0.0,
+                        stock = it.get("stock").toIntOrNull() ?: 0
+                )
                 itemsList.add(item)
             }
-            itemRepository.saveAll(itemsList)
-            return itemsList.size
+
+            return itemRepository.saveAll(itemsList).count()
         } catch (ex: Exception) {
             throw RuntimeException("No fue posible procesar los artículos en el archivo: ${ex.message}")
         }
