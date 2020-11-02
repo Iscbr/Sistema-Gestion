@@ -2,6 +2,11 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/sales"
+                       [routerLink]="['/', 'sales']"
+                       icon="arrow-back-circle"
+                       color="primary">
+      </ion-back-button>
     </ion-buttons>
     <ion-title>Ventas</ion-title>
   </ion-toolbar>
@@ -11,114 +16,117 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Buscar</ion-card-title>
+      <ion-card-title>
+        Ventas
+      </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      <ion-grid>
-        <ion-row>
+      <ngx-datatable
+          #saleOrderTable
+          class="bootstrap expandable"
+          [rows]="saleOrderList"
+          [columnMode]="ColumnMode.force"
+          headerHeight="50"
+          footerHeight="auto"
+          rowHeight="auto"
+          [limit]="20"
+      >
 
-          <!-- SELECTABLE DE ARTÍCULOS -->
-          <ionic-selectable hidden
-                            #itemComponent
-                            itemValueField="id"
-                            itemTextField="name"
-                            searchPlaceholder="Buscar"
-                            [canSearch]="true"
-                            [hasInfiniteScroll]="false"
-                            [items]="items"
-                            (onSearch)="searchItem($event)"
-                            (onSelect)="selectItem($event)">
-            <ng-template ionicSelectableHeaderTemplate>
-              <ion-header>
-                <ion-toolbar>
-                  <ion-title>
-                    Artículos
-                  </ion-title>
-                  <ion-buttons slot="primary">
-                    <ion-button (click)="itemComponent.close()" title="Cerrar">
-                      <ion-icon name="close" slot="icon-only"></ion-icon>
-                    </ion-button>
-                  </ion-buttons>
-                </ion-toolbar>
-              </ion-header>
-            </ng-template>
-          </ionic-selectable>
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail [rowHeight]="50">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div style="padding-left:60px; font-size:14px">
+              <div>{{ row.description }}, {{ row.price }}, {{ row.createdDate }}</div>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
 
-          <ion-col>
-            <ion-button shape="round" expand="full" (click)="addItem()">Buscar productos</ion-button>
-          </ion-col>
-        </ion-row>
+        <!-- Column Templates -->
+        <ngx-datatable-column
+          [width]="50"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false"
+        >
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a
+              href="#"
+              [class.datatable-icon-right]="!expanded"
+              [class.datatable-icon-down]="expanded"
+              title="Expand/Collapse Row"
+              (click)="$event.preventDefault(); $event.stopPropagation(); toggleExpandRow($event, row)"
+              class="desktop-hidden"
+            >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
 
-        <ion-row>
-          <ion-col class="ion-margin-vertical" *ngIf="saleOrder.orderLines.length > 0">
-            <ion-item lines="none">
-              <ion-button shape="round" size="medium" (click)="finishSale()">Finalizar venta</ion-button>
-            </ion-item>
-          </ion-col>
+        <ngx-datatable-column prop="clientName" [flexGrow]="3">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              <b>Cliente</b>
+            </span>
+          </ng-template>
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
 
-          <ion-col class="ion-margin-vertical">
-            <ion-item lines="none">
-              <ion-label class="ion-text-right">
-                <h1 style="font-size: 40px;">Total: {{ this.currencyService.formatAmountToCurrencyString(saleOrder.total) }}</h1>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+        <ngx-datatable-column prop="clientRfc" [flexGrow]="1">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              <b>RFC Cliente</b>
+            </span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="mobile-hidden">{{ value }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="employeeName" [flexGrow]="1">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              <b>Empleado</b>
+            </span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="mobile-hidden">
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="createdDate" [flexGrow]="1">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              <b>Fecha de Creación</b>
+            </span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="mobile-hidden">
+              {{ dateService.parseDate(value) }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="status" [flexGrow]="1">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span class="mobile-hidden">
+              <b>Estatus</b>
+            </span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="mobile-hidden">
+              {{ value }}
+            </span>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+
     </ion-card-content>
   </ion-card>
-
-  <ion-card *ngIf="saleOrder.orderLines.length > 0">
-    <ion-card-header>
-      <ion-card-title>Productos</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-grid>
-        <ion-row *ngFor="let line of saleOrder.orderLines">
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="6" class="ion-margin-vertical">
-            <ion-item>
-              <ion-avatar slot="start">
-                <ion-icon size="large" name="pricetag"></ion-icon>
-              </ion-avatar>
-              <ion-label position="floating"> {{ line.itemName }}</ion-label>
-              <ion-input [value]="line.itemDescription" readonly></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="1" class="ion-margin-vertical">
-            <ion-item>
-              <ion-label position="floating">Cant.</ion-label>
-              <ion-input [value]="line.quantity" (ionBlur)="updateQuantity($event.target.value, line)" type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2" class="ion-margin-vertical">
-            <ion-item>
-              <ion-label position="floating">Precio unitario</ion-label>
-              <ion-input [value]="this.currencyService.formatAmountToCurrencyString(line.itemPrice)" readonly></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2" class="ion-margin-vertical">
-            <ion-item>
-              <ion-label position="floating">Total</ion-label>
-              <ion-input [value]="this.currencyService.formatAmountToCurrencyString(line.totalLine)" readonly></ion-input>
-            </ion-item>
-          </ion-col>
-
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="1" class="ion-margin-vertical ion-text-center">
-            <ion-button fill="clear" size="medium"
-                        (click)="deleteSaleOrderLine(line)">
-              <ion-icon name="trash"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card></ion-card>
 
 </ion-content>

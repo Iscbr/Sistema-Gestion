@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ItemRepository : CrudRepository<Item, Long> {
-    fun findAllByActive(active: Boolean = true): List<Item>
+    fun findByActiveTrueOrderByNameAsc(): List<Item>
 }

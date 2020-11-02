@@ -1,0 +1,137 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Venta a público</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-margin-vertical">
+            <ion-card-title>Buscar</ion-card-title>
+          </ion-col>
+          <ion-col class="ion-text-right">
+            <ion-button shape="round" routerLink="/sales/list">
+              <ion-icon slot="start" name="list"></ion-icon>
+              Ventas
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+
+          <!-- SELECTABLE DE ARTÍCULOS -->
+          <ionic-selectable hidden
+                            #itemComponent
+                            itemValueField="id"
+                            itemTextField="name"
+                            searchPlaceholder="Buscar"
+                            [canSearch]="true"
+                            [hasInfiniteScroll]="false"
+                            [items]="items"
+                            (onSearch)="searchItem($event)"
+                            (onSelect)="selectItem($event)">
+            <ng-template ionicSelectableHeaderTemplate>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title>
+                    Artículos
+                  </ion-title>
+                  <ion-buttons slot="primary">
+                    <ion-button (click)="itemComponent.close()" title="Cerrar">
+                      <ion-icon name="close" slot="icon-only"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+            </ng-template>
+          </ionic-selectable>
+
+          <ion-col>
+            <ion-button shape="round" expand="full" (click)="addItem()">Buscar productos</ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="ion-margin-vertical" *ngIf="saleOrder.orderLines.length > 0">
+            <ion-item lines="none">
+              <ion-button shape="round" size="medium" (click)="finishSale()">Finalizar venta</ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col class="ion-margin-vertical">
+            <ion-item lines="none">
+              <ion-label class="ion-text-right">
+                <h1 style="font-size: 40px;">Total: {{ this.currencyService.formatAmountToCurrencyString(saleOrder.total) }}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="saleOrder.orderLines.length > 0">
+    <ion-card-header>
+      <ion-card-title>Productos</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row *ngFor="let line of saleOrder.orderLines">
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="6" class="ion-margin-vertical">
+            <ion-item>
+              <ion-avatar slot="start">
+                <ion-icon size="large" name="pricetag"></ion-icon>
+              </ion-avatar>
+              <ion-label position="floating"> {{ line.itemName }}</ion-label>
+              <ion-input [value]="line.itemDescription" readonly></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="1" class="ion-margin-vertical">
+            <ion-item>
+              <ion-label position="floating">Cant.</ion-label>
+              <ion-input [value]="line.quantity" (ionBlur)="updateQuantity($event.target.value, line)" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2" class="ion-margin-vertical">
+            <ion-item>
+              <ion-label position="floating">Precio unitario</ion-label>
+              <ion-input [value]="this.currencyService.formatAmountToCurrencyString(line.itemPrice)" readonly></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2" class="ion-margin-vertical">
+            <ion-item>
+              <ion-label position="floating">Total</ion-label>
+              <ion-input [value]="this.currencyService.formatAmountToCurrencyString(line.totalLine)" readonly></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="1" class="ion-margin-vertical ion-text-center">
+            <ion-button fill="clear" size="medium"
+                        (click)="deleteSaleOrderLine(line)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card></ion-card>
+
+</ion-content>

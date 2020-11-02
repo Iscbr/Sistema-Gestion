@@ -17,5 +17,7 @@ export class SaleOrder {
   public finishDate: string;
   public status: string;
 
+  public createdDate: string;
+
   public orderLines: SaleOrderLine[];
 }
