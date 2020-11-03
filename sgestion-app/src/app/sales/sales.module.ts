@@ -6,8 +6,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 
 import { IonicSelectableModule } from "ionic-selectable";
-import { VentaListPage } from "./venta-list/venta-list.page";
-import { FinishSalePage } from "./finish-sale/finish-sale.page";
+import { SaleListPage } from "./sale-list/sale-list.page";
+import { SaleFinishPage } from "./sale-finish/sale-finish.page";
 import { SaleCreatePage } from "./sale-create/sale-create.page";
 
 const routes: Routes = [
@@ -17,15 +17,15 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: VentaListPage
+    component: SaleListPage
   }
 ];
 
 @NgModule({
   declarations: [
     SaleCreatePage,
-    VentaListPage,
-    FinishSalePage
+    SaleListPage,
+    SaleFinishPage
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -36,4 +36,4 @@ const routes: Routes = [
     NgxDatatableModule
   ]
 })
-export class VentasModule { }
+export class SalesModule { }

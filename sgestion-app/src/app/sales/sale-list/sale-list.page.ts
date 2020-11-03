@@ -12,10 +12,10 @@ import { SaleOrder } from "../../../model/sale-order.model";
 
 @Component({
   selector: 'app-venta-list',
-  templateUrl: './venta-list.page.html',
-  styleUrls: ['./venta-list.page.scss'],
+  templateUrl: './sale-list.page.html',
+  styleUrls: ['./sale-list.page.scss'],
 })
-export class VentaListPage implements OnInit {
+export class SaleListPage implements OnInit {
 
   constructor(
     public dateService: UtilDateService,
@@ -28,7 +28,7 @@ export class VentaListPage implements OnInit {
   public saleOrderList: SaleOrder[];
   public ColumnMode = ColumnMode;
 
-  @ViewChild('saleOrderTable', { static: false }) saleOrderTable: IonicSelectableComponent;
+  @ViewChild('SaleOrderTable', { static: false }) SaleOrderTable: IonicSelectableComponent;
 
   async ngOnInit() {
     this.saleOrderList = [];
@@ -57,6 +57,6 @@ export class VentaListPage implements OnInit {
 
   // public toggleExpandRow(event, row) {
   //   event.preventDefault();
-  //   this.saleOrderTable.rowDetail.toggleExpandRow(row);
+  //   this.SaleOrderTable.rowDetail.toggleExpandRow(row);
   // }
 }

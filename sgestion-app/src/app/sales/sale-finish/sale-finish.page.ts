@@ -10,10 +10,10 @@ import { SaleOrder } from "../../../model/sale-order.model";
 
 @Component({
   selector: 'app-finish-sale',
-  templateUrl: './finish-sale.page.html',
-  styleUrls: ['./finish-sale.page.scss'],
+  templateUrl: './sale-finish.page.html',
+  styleUrls: ['./sale-finish.page.scss'],
 })
-export class FinishSalePage implements OnInit {
+export class SaleFinishPage implements OnInit {
 
   constructor(
     public currencyService: UtilCurrencyService,

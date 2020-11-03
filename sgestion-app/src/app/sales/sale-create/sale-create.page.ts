@@ -9,7 +9,7 @@ import { ItemService } from "../../../services/item.service";
 import { Item } from "../../../model/item.model";
 import { SaleOrder } from "../../../model/sale-order.model";
 import { SaleOrderLine } from "../../../model/sale-order-line.model";
-import { FinishSalePage } from "../finish-sale/finish-sale.page";
+import { SaleFinishPage } from "../sale-finish/sale-finish.page";
 
 @Component({
   selector: 'app-sale-create',
@@ -98,7 +98,7 @@ export class SaleCreatePage implements OnInit {
     await this.modalController
       .create({
         cssClass: "custom-modal-finish-sale",
-        component: FinishSalePage,
+        component: SaleFinishPage,
         componentProps: {
           saleOrder: this.saleOrder
         }
