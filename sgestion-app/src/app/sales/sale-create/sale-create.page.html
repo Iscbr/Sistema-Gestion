@@ -100,8 +100,10 @@
               <ion-avatar slot="start">
                 <ion-icon size="large" name="pricetag"></ion-icon>
               </ion-avatar>
-              <ion-label position="floating"> {{ line.itemName }}</ion-label>
-              <ion-input [value]="line.itemDescription" readonly></ion-input>
+              <ion-label>
+                <h3>{{ line.itemName }}</h3>
+                <p>{{ line.itemDescription }}</p>
+              </ion-label>
             </ion-item>
           </ion-col>
 
@@ -114,15 +116,19 @@
 
           <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2" class="ion-margin-vertical">
             <ion-item>
-              <ion-label position="floating">Precio unitario</ion-label>
-              <ion-input [value]="this.currencyService.formatAmountToCurrencyString(line.itemPrice)" readonly></ion-input>
+              <ion-label>
+                <h3>Precio unitario</h3>
+                <p>{{ currencyService.formatAmountToCurrencyString(line.itemPrice) }}</p>
+              </ion-label>
             </ion-item>
           </ion-col>
 
           <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2" class="ion-margin-vertical">
             <ion-item>
-              <ion-label position="floating">Total</ion-label>
-              <ion-input [value]="this.currencyService.formatAmountToCurrencyString(line.totalLine)" readonly></ion-input>
+              <ion-label>
+                <h3>Total</h3>
+                <p>{{ currencyService.formatAmountToCurrencyString(line.totalLine) }}</p>
+              </ion-label>
             </ion-item>
           </ion-col>
 
