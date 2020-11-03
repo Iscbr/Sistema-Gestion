@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicSelectableComponent } from "ionic-selectable";
 import { ModalController } from "@ionic/angular";
+import { timer } from "rxjs";
 
 import { UtilCurrencyService } from "../../../services/util/util-currency.service";
 import { UtilUiService } from "../../../services/util/util-ui.service";
@@ -26,6 +27,7 @@ export class SaleCreatePage implements OnInit {
   ) { }
 
   public saleOrder: SaleOrder;
+  public bnShowMessage: boolean;
 
   @ViewChild('itemComponent', { static: false }) itemComponent: IonicSelectableComponent;
   public items: Item[];
@@ -33,6 +35,8 @@ export class SaleCreatePage implements OnInit {
   async ngOnInit() {
     this.saleOrder = new SaleOrder();
     this.items = [];
+
+    this.bnShowMessage = false;
 
     await this.loadItems();
   }
@@ -125,10 +129,22 @@ export class SaleCreatePage implements OnInit {
           dataReturned => {
             if (dataReturned.role === "DONE") {
               this.ngOnInit();
+              this.bnShowMessage = true;
+              this.setTimer(5);
             }
           }
         );
       });
+  }
+
+  private setTimer(seconds: number) {
+    const source = timer(1000, 1000);
+    const timerSubscription = source.subscribe(value => {
+      if (value === seconds) {
+        this.bnShowMessage = false;
+        timerSubscription.unsubscribe();
+      }
+    })
   }
 
   public async searchItem(event: {

@@ -23,6 +23,12 @@
             </ion-button>
           </ion-col>
         </ion-row>
+
+        <ion-row *ngIf="bnShowMessage">
+          <ion-col class="ion-text-center">
+            <h3 style="color: green;">Venta finalizada correctamente</h3>
+          </ion-col>
+        </ion-row>
       </ion-grid>
 
     </ion-card-header>
