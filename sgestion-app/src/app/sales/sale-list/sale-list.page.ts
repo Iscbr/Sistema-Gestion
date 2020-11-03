@@ -1,12 +1,13 @@
-import {Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from "@ionic/angular";
-import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
+import { ColumnMode, DatatableComponent, SelectionType } from "@swimlane/ngx-datatable";
 
 import { UtilCurrencyService } from "../../../services/util/util-currency.service";
 import { SaleOrderService } from "../../../services/sale-order.service";
 import { UtilDateService } from "../../../services/util/util-date.service";
 import { UtilUiService } from "../../../services/util/util-ui.service";
 
+import { SaleDetailPage } from "../sale-detail/sale-detail.page";
 import { SaleOrder } from "../../../model/sale-order.model";
 
 @Component({
@@ -25,13 +26,16 @@ export class SaleListPage implements OnInit {
   ) { }
 
   public saleOrderList: SaleOrder[];
-  public ColumnMode = ColumnMode;
 
   @ViewChild('ordersTable', { static: false }) ordersTable: DatatableComponent;
+  public ColumnMode = ColumnMode;
+  public SelectionType = SelectionType;
 
   async ngOnInit() {
     this.saleOrderList = [];
+  }
 
+  async ionViewWillEnter() {
     await this.loadItems();
   }
 
@@ -54,6 +58,18 @@ export class SaleListPage implements OnInit {
       );
   }
 
+  public async onSelect(event) {
+    const saleOrderSelected = event.selected[0];
+    await this.modalController
+      .create({
+        cssClass: "custom-modal-sale-detail",
+        component: SaleDetailPage,
+        componentProps: {
+          saleOrder: saleOrderSelected
+        }
+      })
+      .then(componentCreated => componentCreated.present());
+  }
   public toggleExpandRow(event, row) {
     event.preventDefault();
     this.ordersTable.rowDetail.toggleExpandRow(row);

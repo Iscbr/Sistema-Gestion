@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear"  color="dark" (click)="closeModal('CLOSED')">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Detalle de venta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Información general</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Estatus</h3>
+                <p style="color: green;" *ngIf="saleOrder.status">{{ saleOrder.status }}</p>
+                <p *ngIf="!saleOrder.status">No disponible</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Total venta</h3>
+                <p><b>{{ currencyService.formatAmountToCurrencyString(saleOrder.total) }}</b></p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Cliente</h3>
+                <p>{{ saleOrder.clientName ? saleOrder.clientName : 'No disponible' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>RFC Cliente</h3>
+                <p>{{ saleOrder.clientRfc ? saleOrder.clientRfc : 'No disponible' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Vendedor</h3>
+                <p>{{ saleOrder.employeeName ? saleOrder.employeeName : 'No disponible' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Fecha</h3>
+                <p>{{ saleOrder.createdDate ? dateService.parseDate(saleOrder.createdDate) : 'No disponible' }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Artículos de la venta</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row *ngFor="let line of saleOrder.orderLines">
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="6">
+            <ion-item lines="none">
+              <ion-label>
+                <h3>{{ line.itemName }}</h3>
+                <p style="white-space: pre-line;">{{ line.itemDescription }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2">
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Cantidad</h3>
+                <p>{{ line.quantity }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2">
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Precio Unit.</h3>
+                <p>{{ currencyService.formatAmountToCurrencyString(line.itemPrice) }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2">
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Total</h3>
+                <p>{{ currencyService.formatAmountToCurrencyString(line.quantity * line.itemPrice) }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-item-divider></ion-item-divider>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

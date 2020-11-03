@@ -31,6 +31,8 @@
           footerHeight="auto"
           rowHeight="auto"
           [limit]="20"
+          [selectionType]="SelectionType.single"
+          (select)="onSelect($event)"
       >
 
         <!-- Row Detail Template -->

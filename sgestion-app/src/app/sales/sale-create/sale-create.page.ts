@@ -95,6 +95,10 @@ export class SaleCreatePage implements OnInit {
   }
 
   public async finishSale() {
+    this.saleOrder.clientName = "Mostrador";
+    this.saleOrder.employeeName = "Vendedor test";
+    this.saleOrder.status = "COMPLETADA";
+
     await this.modalController
       .create({
         cssClass: "custom-modal-finish-sale",

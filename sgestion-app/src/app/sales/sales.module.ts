@@ -9,6 +9,7 @@ import { IonicSelectableModule } from "ionic-selectable";
 import { SaleListPage } from "./sale-list/sale-list.page";
 import { SaleFinishPage } from "./sale-finish/sale-finish.page";
 import { SaleCreatePage } from "./sale-create/sale-create.page";
+import { SaleDetailPage } from "./sale-detail/sale-detail.page";
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
   declarations: [
     SaleCreatePage,
     SaleListPage,
-    SaleFinishPage
+    SaleFinishPage,
+    SaleDetailPage
   ],
   imports: [
     RouterModule.forChild(routes),
