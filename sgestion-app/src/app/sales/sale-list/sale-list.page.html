@@ -17,17 +17,17 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        Ventas
+        Ventas realizadas
       </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <ngx-datatable
-          #SaleOrderTable
-          class="bootstrap expandable"
+          #ordersTable
+          class="bootstrap"
           [rows]="saleOrderList"
           [columnMode]="ColumnMode.force"
-          headerHeight="50"
+          headerHeight="auto"
           footerHeight="auto"
           rowHeight="auto"
           [limit]="20"
@@ -37,7 +37,7 @@
         <ngx-datatable-row-detail [rowHeight]="50">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
             <div style="padding-left:60px; font-size:14px">
-              <div>{{ row.description }}, {{ row.price }}, {{ row.createdDate }}</div>
+              <div>{{ row.clientName }}, {{ row.clientRfc }}, {{ row.Estatus }}</div>
             </div>
           </ng-template>
         </ngx-datatable-row-detail>
@@ -65,7 +65,7 @@
 
         <ngx-datatable-column prop="clientName" [flexGrow]="3">
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-            <span class="mobile-hidden">
+            <span>
               <b>Cliente</b>
             </span>
           </ng-template>

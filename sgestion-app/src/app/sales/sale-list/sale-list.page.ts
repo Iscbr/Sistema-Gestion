@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonicSelectableComponent } from "ionic-selectable";
+import {Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from "@ionic/angular";
-import { ColumnMode } from "@swimlane/ngx-datatable";
+import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
 
 import { UtilCurrencyService } from "../../../services/util/util-currency.service";
 import { SaleOrderService } from "../../../services/sale-order.service";
@@ -28,7 +27,7 @@ export class SaleListPage implements OnInit {
   public saleOrderList: SaleOrder[];
   public ColumnMode = ColumnMode;
 
-  @ViewChild('SaleOrderTable', { static: false }) SaleOrderTable: IonicSelectableComponent;
+  @ViewChild('ordersTable', { static: false }) ordersTable: DatatableComponent;
 
   async ngOnInit() {
     this.saleOrderList = [];
@@ -55,8 +54,8 @@ export class SaleListPage implements OnInit {
       );
   }
 
-  // public toggleExpandRow(event, row) {
-  //   event.preventDefault();
-  //   this.SaleOrderTable.rowDetail.toggleExpandRow(row);
-  // }
+  public toggleExpandRow(event, row) {
+    event.preventDefault();
+    this.ordersTable.rowDetail.toggleExpandRow(row);
+  }
 }

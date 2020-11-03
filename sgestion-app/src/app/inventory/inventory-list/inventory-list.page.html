@@ -7,7 +7,8 @@
     <ion-buttons slot="end">
       <ion-button fill="solid"
                   color="primary"
-                  shape="round" (click)="uploadCSVFile()">
+                  shape="round"
+                  (click)="uploadCSVFile()">
         <ion-icon slot="start" name="cloud-upload"></ion-icon>
         Cargar CSV
       </ion-button>
@@ -26,10 +27,10 @@
     <ion-card-content>
       <ngx-datatable
         #itemsTable
-        class="bootstrap expandable"
+        class="bootstrap"
         [rows]="itemsList"
         [columnMode]="ColumnMode.force"
-        headerHeight="50"
+        headerHeight="auto"
         footerHeight="auto"
         rowHeight="auto"
         [limit]="20"

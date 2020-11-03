@@ -59,21 +59,26 @@
           </ionic-selectable>
 
           <ion-col>
-            <ion-button shape="round" expand="full" (click)="addItem()">Buscar productos</ion-button>
+            <ion-button shape="round" expand="full" (click)="addItem()">
+              <ion-icon slot="start" name="search"></ion-icon>
+              Buscar productos
+            </ion-button>
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col class="ion-margin-vertical" *ngIf="saleOrder.orderLines.length > 0">
             <ion-item lines="none">
-              <ion-button shape="round" size="medium" (click)="finishSale()">Finalizar venta</ion-button>
+              <ion-button shape="round" size="medium" (click)="finishSale()">
+                Finalizar venta
+              </ion-button>
             </ion-item>
           </ion-col>
 
           <ion-col class="ion-margin-vertical">
             <ion-item lines="none">
               <ion-label class="ion-text-right">
-                <h1 style="font-size: 40px;">Total: {{ this.currencyService.formatAmountToCurrencyString(saleOrder.total) }}</h1>
+                <h1 style="font-size: 35px;">Total: {{ this.currencyService.formatAmountToCurrencyString(saleOrder.total) }}</h1>
               </ion-label>
             </ion-item>
           </ion-col>

@@ -18,3 +18,24 @@
 ::ng-deep.datatable-body-row {
   cursor: pointer;
 }
+
+::ng-deep .ngx-datatable.bootstrap .datatable-body {
+  .datatable-body-row {
+    &.datatable-row-even {
+      background-color: rgba(0, 0, 0, 0.05);
+
+      &.active {
+        background-color: rgba(0, 0, 0, 0.05);
+        color: inherit;
+      }
+    }
+    &.datatable-row-odd {
+      background-color: rgba(255, 255, 255, 1);
+
+      &.active {
+        background-color: rgba(255, 255, 255, 1);
+        color: inherit;
+      }
+    }
+  }
+}
