@@ -73,8 +73,20 @@ export class SaleCreatePage implements OnInit {
   public async updateQuantity(quantity: string, saleOrderLine: SaleOrderLine) {
     let quantityNumberValue: number = await this.currencyService.getNumberFromCurrencyString(quantity.toString());
     if (quantityNumberValue > 0) {
-      saleOrderLine.quantity = quantityNumberValue;
-      saleOrderLine.totalLine = saleOrderLine.itemPrice * saleOrderLine.quantity;
+      const stockAvailable = this.items.find(item => item.id === saleOrderLine.itemId).stock;
+      if (stockAvailable >= quantityNumberValue) {
+        saleOrderLine.quantity = quantityNumberValue;
+        saleOrderLine.totalLine = saleOrderLine.itemPrice * saleOrderLine.quantity;
+      } else {
+        saleOrderLine.quantity = 1;
+        saleOrderLine.totalLine = saleOrderLine.itemPrice * saleOrderLine.quantity;
+        await this.uiService.showMessageAlert(
+          false,
+          "Stock insuficiente",
+          "No existe suficiente stock disponible para satisfacer la cantidad solicitada.",
+          ["OK"]
+        );
+      }
     } else {
       saleOrderLine.quantity = 1;
       saleOrderLine.totalLine = saleOrderLine.itemPrice * saleOrderLine.quantity;

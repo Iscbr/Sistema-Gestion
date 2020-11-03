@@ -70,6 +70,7 @@
           <ion-col class="ion-margin-vertical" *ngIf="saleOrder.orderLines.length > 0">
             <ion-item lines="none">
               <ion-button shape="round" size="medium" (click)="finishSale()">
+                <ion-icon slot="start" name="card"></ion-icon>
                 Finalizar venta
               </ion-button>
             </ion-item>
@@ -78,7 +79,7 @@
           <ion-col class="ion-margin-vertical">
             <ion-item lines="none">
               <ion-label class="ion-text-right">
-                <h1 style="font-size: 35px;">Total: {{ this.currencyService.formatAmountToCurrencyString(saleOrder.total) }}</h1>
+                <h1 style="font-size: 30px;">Total: {{ this.currencyService.formatAmountToCurrencyString(saleOrder.total) }}</h1>
               </ion-label>
             </ion-item>
           </ion-col>
