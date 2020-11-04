@@ -7,6 +7,12 @@
     <ion-buttons slot="end">
       <ion-button fill="solid"
                   color="primary"
+                  shape="round" (click)="createItem()">
+        <ion-icon slot="start" name="add-circle"></ion-icon>
+        Agregar artículo
+      </ion-button>
+      <ion-button fill="solid"
+                  color="primary"
                   shape="round"
                   (click)="uploadCSVFile()">
         <ion-icon slot="start" name="cloud-upload"></ion-icon>

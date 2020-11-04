@@ -35,8 +35,7 @@ class ItemController @Autowired constructor(
             @RequestBody item: Item) : ResponseEntity<Any> {
         if (item.id != id) return ResponseEntity(HttpStatus.BAD_REQUEST)
         itemService.getItemById(id)?.let {
-            itemService.createOrUpdateItem(it)
-            return ResponseEntity(HttpStatus.OK)
+            return ResponseEntity(itemService.createOrUpdateItem(it), HttpStatus.OK)
         } ?: return ResponseEntity(HttpStatus.NOT_FOUND)
     }
 

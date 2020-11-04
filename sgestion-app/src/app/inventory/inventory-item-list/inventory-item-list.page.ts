@@ -9,6 +9,7 @@ import { ItemService } from "../../../services/item.service";
 
 import { InventoryUploadCsvPage } from "../inventory-upload-csv/inventory-upload-csv.page";
 import { InventoryItemDetailPage } from "../inventory-item-detail/inventory-item-detail.page";
+import { InventoryItemCreatePage } from "../inventory-item-create/inventory-item-create.page";
 import { Item } from "../../../model/item.model";
 
 @Component({
@@ -62,6 +63,23 @@ export class InventoryItemListPage implements OnInit {
         );
       }
     );
+  }
+
+  public async createItem() {
+    await this.modalController.create({
+      cssClass: "custom-modal-sale-detail",
+      component: InventoryItemCreatePage
+    })
+    .then(componentCreated => {
+      componentCreated.present();
+      componentCreated.onDidDismiss().then(
+        data => {
+          if (data.role === "DONE") {
+            this.ngOnInit();
+          }
+        }
+      );
+    });
   }
 
   public async uploadCSVFile() {

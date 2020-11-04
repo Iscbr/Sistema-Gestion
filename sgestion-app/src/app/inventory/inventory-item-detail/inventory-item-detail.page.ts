@@ -4,6 +4,7 @@ import { ModalController } from "@ionic/angular";
 import { UtilDateService } from "../../../services/util/util-date.service";
 import { UtilCurrencyService } from "../../../services/util/util-currency.service";
 
+import { InventoryItemCreatePage } from "../inventory-item-create/inventory-item-create.page";
 import { Item } from "../../../model/item.model";
 
 @Component({
@@ -24,6 +25,16 @@ export class InventoryItemDetailPage implements OnInit {
   ngOnInit() {
   }
 
+  public async editItem() {
+    await this.modalController.create({
+      cssClass: "custom-modal-sale-detail",
+      component: InventoryItemCreatePage,
+      componentProps: {
+        idItem: this.item.id
+      }
+    })
+    .then(componentCreated => componentCreated.present());
+  }
   /**
    * Se cierra el componente y no se envía ninguna información al componente padre.
    */

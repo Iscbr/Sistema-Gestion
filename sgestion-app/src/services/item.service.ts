@@ -23,7 +23,7 @@ export class ItemService {
     return this.httpClient.get<Item[]>(url, { headers: this.headers });
   }
 
-  public getById(id: String): Observable<Item> {
+  public getById(id: number): Observable<Item> {
     const url = this.itemServiceUrl + "/Get/" + id;
     return this.httpClient.get<Item>(url, { headers: this.headers });
   }
@@ -33,12 +33,12 @@ export class ItemService {
     return this.httpClient.post<Item>(url, item, { headers: this.headers });
   }
 
-  public update(id: string, item: Item): Observable<any> {
+  public update(id: number, item: Item): Observable<any> {
     const url = this.itemServiceUrl + "/update/" + id;
     return this.httpClient.put<any>(url, item, { headers: this.headers });
   }
 
-  public disable(id: string): Observable<any> {
+  public disable(id: number): Observable<any> {
     const url = this.itemServiceUrl + "/delete/" + id;
     return this.httpClient.delete<any>(url,{ headers: this.headers });
   }
