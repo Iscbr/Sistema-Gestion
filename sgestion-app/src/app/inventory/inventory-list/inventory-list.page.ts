@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ColumnMode, DatatableComponent } from "@swimlane/ngx-datatable";
+import { ColumnMode, DatatableComponent, SelectionType } from "@swimlane/ngx-datatable";
 import { ModalController } from "@ionic/angular";
 
 import { UtilCurrencyService } from "../../../services/util/util-currency.service";
@@ -8,6 +8,7 @@ import { UtilUiService } from "../../../services/util/util-ui.service";
 import { ItemService } from "../../../services/item.service";
 
 import { InventoryUploadCsvPage } from "../inventory-upload-csv/inventory-upload-csv.page";
+import { InventoryItemDetailPage } from "../inventory-item-detail/inventory-item-detail.page";
 import { Item } from "../../../model/item.model";
 
 @Component({
@@ -21,6 +22,7 @@ export class InventoryListPage implements OnInit {
   public ColumnMode = ColumnMode;
 
   @ViewChild('itemsTable', { static: false }) itemsTable: DatatableComponent;
+  public SelectionType = SelectionType;
 
   constructor(
     public dateService: UtilDateService,
@@ -77,6 +79,19 @@ export class InventoryListPage implements OnInit {
         }
       );
     });
+  }
+
+  public async onSelect(event) {
+    const itemSelected = event.selected[0];
+    await this.modalController
+      .create({
+        cssClass: "custom-modal-sale-detail",
+        component: InventoryItemDetailPage,
+        componentProps: {
+          item: itemSelected
+        }
+      })
+      .then(componentCreated => componentCreated.present());
   }
 
   public toggleExpandRow(event, row) {

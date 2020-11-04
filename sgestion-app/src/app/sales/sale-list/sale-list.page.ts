@@ -70,6 +70,7 @@ export class SaleListPage implements OnInit {
       })
       .then(componentCreated => componentCreated.present());
   }
+
   public toggleExpandRow(event, row) {
     event.preventDefault();
     this.ordersTable.rowDetail.toggleExpandRow(row);

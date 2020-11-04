@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="dark"  title="Editar artículo">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="dark" title="Cerrar" (click)="closeModal('CLOSED')">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Detalle de artículo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Información general</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>ID</h3>
+                <p>{{ item.id }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Estatus</h3>
+                <p *ngIf="item.active">Activo</p>
+                <p *ngIf="!item.active">Inactivo</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Nombre</h3>
+                <p>{{ item.name }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Descripción</h3>
+                <p style="white-space: pre-line;">{{ item.description }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Precio</h3>
+                <p>{{ currencyService.formatAmountToCurrencyString(item.price) }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Stock disponible</h3>
+                <p>{{ item.stock }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Auditoría</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Fecha de creación</h3>
+                <p>{{ dateService.parseDate(item.createdDate) }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h3>Última actualización</h3>
+                <p>{{ dateService.parseDate(item.updatedDate) }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -17,6 +17,7 @@
 </ion-header>
 
 <ion-content>
+
   <ion-card>
     <ion-card-header>
       <ion-card-title>
@@ -34,6 +35,8 @@
         footerHeight="auto"
         rowHeight="auto"
         [limit]="20"
+        [selectionType]="SelectionType.single"
+        (select)="onSelect($event)"
       >
 
         <!-- Row Detail Template -->
