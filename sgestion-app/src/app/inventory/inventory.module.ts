@@ -4,20 +4,20 @@ import { RouterModule, Routes } from "@angular/router";
 import { IonicModule } from "@ionic/angular";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 
-import { InventoryListPage } from "./inventory-list/inventory-list.page";
 import { InventoryUploadCsvPage } from "./inventory-upload-csv/inventory-upload-csv.page";
 import { InventoryItemDetailPage } from "./inventory-item-detail/inventory-item-detail.page";
+import { InventoryItemListPage } from "./inventory-item-list/inventory-item-list.page";
 
 const routes: Routes = [
   {
     path: '',
-    component: InventoryListPage
+    component: InventoryItemListPage
   }
 ];
 
 @NgModule({
   declarations: [
-    InventoryListPage,
+    InventoryItemListPage,
     InventoryUploadCsvPage,
     InventoryItemDetailPage
   ],

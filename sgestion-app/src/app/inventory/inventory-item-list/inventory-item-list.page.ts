@@ -13,10 +13,10 @@ import { Item } from "../../../model/item.model";
 
 @Component({
   selector: 'app-inventory-list',
-  templateUrl: './inventory-list.page.html',
-  styleUrls: ['./inventory-list.page.scss'],
+  templateUrl: './inventory-item-list.page.html',
+  styleUrls: ['./inventory-item-list.page.scss'],
 })
-export class InventoryListPage implements OnInit {
+export class InventoryItemListPage implements OnInit {
 
   public itemsList: Item[];
   public ColumnMode = ColumnMode;
