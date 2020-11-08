@@ -59,6 +59,7 @@ export class InventoryItemCreatePage implements OnInit {
       itemRetrieved => {
         this.item = itemRetrieved;
         this.newItemForm.reset(this.item);
+        this.newItemForm.get("price").setValue(this.currencyService.formatAmountToCurrencyString(this.item.price));
       },
       error => this.uiService.showMessageAlert(
         false,

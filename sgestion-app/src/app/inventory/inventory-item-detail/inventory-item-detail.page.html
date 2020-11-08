@@ -1,10 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
+      <ion-button fill="clear" color="danger" title="Eliminar artículo" (click)="deleteItem()">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
       <ion-button fill="clear" color="dark" title="Editar artículo" (click)="editItem()">
         <ion-icon name="create"></ion-icon>
       </ion-button>
-      <ion-button fill="clear" color="dark" title="Cerrar" (click)="closeModal('CLOSED')">
+      <ion-button fill="clear" color="dark" title="Cerrar" (click)="closeModal('DONE')">
         <ion-icon name="close" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
