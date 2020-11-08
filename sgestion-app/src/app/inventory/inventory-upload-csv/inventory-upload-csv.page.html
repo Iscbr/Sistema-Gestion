@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button fill="clear" slot="end" color="dark" (click)="closeModal('CLOSED')">
+    <ion-button fill="clear" slot="end" color="dark" title="Cerrar" (click)="closeModal('CLOSED')">
       <ion-icon name="close" slot="icon-only"></ion-icon>
     </ion-button>
     <ion-title>Subir CSV</ion-title>
@@ -57,7 +57,7 @@
           color="success"
           (click)="sendFileToServer()">
           <ion-icon slot="start" name="arrow-forward"></ion-icon>
-          Enviar archivo adjunto
+          Cargar productos al inventario
         </ion-button>
       </ion-col>
     </ion-row>
