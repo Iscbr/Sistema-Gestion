@@ -9,7 +9,7 @@ class Users(
         @Column(length = 100) var name: String,
         @Column(length = 100) var firstName: String,
         @Column(length = 100) var secondName: String,
-        @Column(length = 100) var email: String,
+        @Column(length = 100, unique = true) var email: String,
         @Column(length = 500) var password: String,
         @ManyToMany
         @JoinTable(
