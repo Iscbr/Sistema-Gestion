@@ -5,30 +5,34 @@
         <ion-icon name="close" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Creación de artículo</ion-title>
+    <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>Nuevo artículo</ion-card-title>
-    </ion-card-header>
 
     <ion-card-content>
       <form [formGroup]="newItemForm">
         <ion-grid>
           <ion-row>
-            <ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="8">
               <ion-item>
                 <ion-label position="floating">Nombre del artículo:</ion-label>
                 <ion-input formControlName="name"></ion-input>
               </ion-item>
             </ion-col>
+
+            <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="4">
+              <ion-item lines="none">
+                <ion-label>Activo</ion-label>
+                <ion-toggle formControlName="active"></ion-toggle>
+              </ion-item>
+            </ion-col>
           </ion-row>
 
           <ion-row>
-            <ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
               <ion-item>
                 <ion-label position="floating">Descripción del artículo:</ion-label>
                 <ion-textarea formControlName="description" rows="1" auto-grow></ion-textarea>
@@ -37,14 +41,14 @@
           </ion-row>
 
           <ion-row>
-            <ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="6">
               <ion-item>
                 <ion-label position="floating">Precio:</ion-label>
-                <ion-input formControlName="price"></ion-input>
+                <ion-input formControlName="price" (ionBlur)="parsePrice($event.target.value)"></ion-input>
               </ion-item>
             </ion-col>
 
-            <ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="6">
               <ion-item>
                 <ion-label position="floating">Stock:</ion-label>
                 <ion-input formControlName="stock"></ion-input>
