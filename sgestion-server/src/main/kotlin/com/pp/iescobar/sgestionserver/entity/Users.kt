@@ -1,10 +1,7 @@
 package com.pp.iescobar.sgestionserver.entity
 
 import java.io.Serializable
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class Users(
@@ -13,5 +10,12 @@ class Users(
         @Column(length = 100) var firstName: String,
         @Column(length = 100) var secondName: String,
         @Column(length = 100) var email: String,
-        @Column(length = 500) var password: String
+        @Column(length = 500) var password: String,
+        @ManyToMany
+        @JoinTable(
+                name = "user_role",
+                joinColumns = [JoinColumn(name = "user_id")],
+                inverseJoinColumns = [JoinColumn(name = "role_id")]
+        )
+        var roles: List<Role> = emptyList()
 ) : Audit(), Serializable
