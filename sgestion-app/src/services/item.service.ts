@@ -38,7 +38,7 @@ export class ItemService {
     return this.httpClient.put<any>(url, item, { headers: this.headers });
   }
 
-  public disable(id: number): Observable<any> {
+  public delete(id: number): Observable<any> {
     const url = this.itemServiceUrl + "/delete/" + id;
     return this.httpClient.delete<any>(url,{ headers: this.headers });
   }

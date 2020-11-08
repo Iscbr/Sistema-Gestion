@@ -27,15 +27,16 @@ class ItemService @Autowired constructor(
     fun getItemById(id: Long) : Item? = itemRepository.findByIdOrNull(id)
 
     @Transactional
-    fun createOrUpdateItem(item: Item) : Item = itemRepository.save(item)
+    fun createOrUpdateItem(item: Item) : Item {
+        if (!item.active) {
+            item.disabledDate = Date()
+            item.disabledBy = "Test"
+        }
+        return itemRepository.save(item)
+    }
 
     @Transactional
-    fun deleteItem(item: Item) {
-        item.active = false
-        item.disabledDate = Date()
-        item.disabledBy = "Test"
-        createOrUpdateItem(item)
-    }
+    fun deleteItem(id: Long) = itemRepository.deleteById(id)
 
     @Transactional
     fun processItemsInFile(file: MultipartFile): Int {

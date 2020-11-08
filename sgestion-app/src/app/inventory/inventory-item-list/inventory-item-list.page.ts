@@ -109,7 +109,14 @@ export class InventoryItemListPage implements OnInit {
           item: itemSelected
         }
       })
-      .then(componentCreated => componentCreated.present());
+      .then(componentCreated => {
+        componentCreated.onDidDismiss().then(data => {
+          if (data.role === "DONE") {
+            this.ngOnInit();
+          }
+        });
+        componentCreated.present();
+      });
   }
 
   public toggleExpandRow(event, row) {

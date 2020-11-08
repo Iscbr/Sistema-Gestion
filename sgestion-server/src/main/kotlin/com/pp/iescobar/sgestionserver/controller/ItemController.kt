@@ -42,7 +42,7 @@ class ItemController @Autowired constructor(
     @DeleteMapping("/delete/{id}")
     fun deleteItem(@PathVariable("id") id: Long) : ResponseEntity<Any> =
             itemService.getItemById(id)?.let {
-                itemService.deleteItem(it)
+                itemService.deleteItem(id)
                 return ResponseEntity(HttpStatus.OK)
         } ?: ResponseEntity(HttpStatus.NOT_FOUND)
 

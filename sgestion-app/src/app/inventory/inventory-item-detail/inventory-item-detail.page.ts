@@ -38,8 +38,28 @@ export class InventoryItemDetailPage implements OnInit {
         {
           text: "Sí, Eliminar",
           handler: () => {
-            this.itemService.disable(parseInt(this.item.id));
-            this.closeModal("DONE");
+            this.uiService.showLoadingAlert("Eliminando...");
+            this.itemService.delete(parseInt(this.item.id)).subscribe(
+              () => {
+                this.uiService.dismissLoadingAlert();
+                this.closeModal("DONE");
+              },
+              error => this.uiService.showMessageAlert(
+                true,
+                "Error al eliminar artículo",
+                "Ocurrió un error al eliminar el artículo, es posible que el servidor no esté disponible " +
+                "o revise su conexión a internet e inténtelo de nuevo.<br><br>ERROR: " + error.error,
+                [
+                  {
+                    text: "Reintentar",
+                    handler: () => this.deleteItem()
+                  },
+                  {
+                    text: "Aceptar",
+                  }
+                ]
+              )
+            );
           }
         },
         {
