@@ -6,12 +6,14 @@ import com.pp.iescobar.sgestionserver.repository.RoleRepository
 import com.pp.iescobar.sgestionserver.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
-class ApplicationStatup @Autowired constructor(
+class ApplicationStartup @Autowired constructor(
         val userRepository: UserRepository,
-        val roleRepository: RoleRepository
+        val roleRepository: RoleRepository,
+        val bCryptPasswordEncoder: BCryptPasswordEncoder
 ): CommandLineRunner {
 
     override fun run(vararg args: String?) {
@@ -24,7 +26,15 @@ class ApplicationStatup @Autowired constructor(
         }
 
         if (userRepository.findAll().toList().isEmpty()) {
-            val admin = Users(null, "SGestion Admin", "SGestion Admin", "SGestion Admin", "admin@sgestion.com", "admin", roles)
+            val admin = Users(
+                    null,
+                    "SGestion Admin",
+                    "SGestion Admin",
+                    "SGestion Admin",
+                    "admin@sgestion.com",
+                    bCryptPasswordEncoder.encode("admin"),
+                    roles
+            )
             userRepository.save(admin)
         }
     }
