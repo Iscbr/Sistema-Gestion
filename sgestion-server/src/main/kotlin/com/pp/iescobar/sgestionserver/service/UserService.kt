@@ -1,5 +1,6 @@
 package com.pp.iescobar.sgestionserver.service
 
+import com.pp.iescobar.sgestionserver.entity.Users
 import com.pp.iescobar.sgestionserver.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -17,9 +18,12 @@ class UserService @Autowired constructor(
 
     @Transactional(readOnly = true)
     override fun loadUserByUsername(email: String?): UserDetails? {
-        val user = email?.let { userRepository.findByEmail(it) } ?: throw UsernameNotFoundException("User does not exist")
+        val user = email?.let { loadUserByEmail(it) } ?: throw UsernameNotFoundException("User does not exist")
         val authorities = user.roles.map { SimpleGrantedAuthority(it.name) }
         return User(user.email, user.password, user.active, true, true, true, authorities)
     }
+
+    @Transactional(readOnly = true)
+    fun loadUserByEmail(email: String?): Users? = email?.let { userRepository.findByEmail(it) }
 
 }
