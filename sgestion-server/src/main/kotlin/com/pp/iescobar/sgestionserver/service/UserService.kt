@@ -19,7 +19,7 @@ class UserService @Autowired constructor(
     @Transactional(readOnly = true)
     override fun loadUserByUsername(email: String?): UserDetails? {
         val user = email?.let { loadUserByEmail(it) } ?: throw UsernameNotFoundException("User does not exist")
-        val authorities = user.roles.map { SimpleGrantedAuthority(it.name) }
+        val authorities = user.roles.map { SimpleGrantedAuthority("ROLE_${it.name}") }
         return User(user.email, user.password, user.active, true, true, true, authorities)
     }
 
