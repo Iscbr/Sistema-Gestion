@@ -40,6 +40,11 @@ class AuthorizationServerConfig @Autowired constructor(
     }
 
     @Bean
-    fun accessTokenConverter(): JwtAccessTokenConverter = JwtAccessTokenConverter()
+    fun accessTokenConverter(): JwtAccessTokenConverter {
+        val jwtAccessTokenConverter = JwtAccessTokenConverter()
+        jwtAccessTokenConverter.setSigningKey(RsaKeys.rsaPrivateKey)
+        jwtAccessTokenConverter.setVerifierKey(RsaKeys.rsaPublicKey)
+        return jwtAccessTokenConverter
+    }
 
 }
