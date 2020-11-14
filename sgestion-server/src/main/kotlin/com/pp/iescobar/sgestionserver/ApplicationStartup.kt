@@ -28,14 +28,23 @@ class ApplicationStartup @Autowired constructor(
         if (userRepository.findAll().toList().isEmpty()) {
             val admin = Users(
                     null,
-                    "SGestion Admin",
-                    "SGestion Admin",
-                    "SGestion Admin",
+                    "SGestion",
+                    "Admin",
+                    "Admin",
                     "admin@sgestion.com",
                     bCryptPasswordEncoder.encode("admin"),
-                    roles
+                    roles.filter { it.name == "ADMIN" }
             )
-            userRepository.save(admin)
+            val seller = Users(
+                    null,
+                    "SGestion",
+                    "Seller",
+                    "Seller",
+                    "seller@sgestion.com",
+                    bCryptPasswordEncoder.encode("seller"),
+                    roles.filter { it.name == "SELLER" }
+            )
+            userRepository.saveAll(listOf(admin, seller))
         }
     }
 }
