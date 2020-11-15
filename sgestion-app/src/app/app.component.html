@@ -4,7 +4,7 @@
       <ion-content>
         <ion-list id="inbox-list" >
           <ion-list-header>SGestión</ion-list-header>
-          <ion-note>
+          <ion-note *ngIf="user">
             Bienvenido {{ user.firstName + ' ' + user.secondName }}
           </ion-note>
 

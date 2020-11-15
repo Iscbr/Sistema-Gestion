@@ -54,12 +54,7 @@ export class AppComponent implements OnInit {
     this.initializeUserSession().then();
   }
 
-  ngOnInit() {
-    const path = window.location.pathname;
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.url.toLowerCase() === path.toLowerCase());
-    }
-  }
+  ngOnInit() {}
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -75,9 +70,11 @@ export class AppComponent implements OnInit {
       if (this.user.roles.includes("ROLE_ADMIN")) {
         this.appPages = this.appAdminPages;
         await this.router.navigate(["/", "inventory"]);
+        this.selectIndex();
       } else if (this.user.roles.includes("ROLE_SELLER")) {
         this.appPages = this.appSellerPages;
         await this.router.navigate(["/", "sales"]);
+        this.selectIndex();
       } else {
         await this.uiService.showMessageAlert(
           false,
@@ -89,6 +86,13 @@ export class AppComponent implements OnInit {
       }
     } else {
       await this.router.navigate(["/", "login"]);
+    }
+  }
+
+  private selectIndex() {
+    const path = window.location.pathname;
+    if (path !== undefined) {
+      this.selectedIndex = this.appPages.findIndex(page => page.url.toLowerCase() === path.toLowerCase());
     }
   }
 

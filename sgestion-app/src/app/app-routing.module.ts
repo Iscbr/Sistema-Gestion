@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+import { AuthGuardService } from "../services/auth-guard.service";
+
 const routes: Routes = [
   {
     path: '',
@@ -9,11 +11,13 @@ const routes: Routes = [
   },
   {
     path: 'sales',
-    loadChildren: () => import('./sales/sales.module').then(m => m.SalesModule)
+    loadChildren: () => import('./sales/sales.module').then(m => m.SalesModule),
+    canLoad: [AuthGuardService]
   },
   {
     path: 'inventory',
-    loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryModule)
+    loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryModule),
+    canLoad: [AuthGuardService]
   },
   {
     path: 'login',
