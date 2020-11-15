@@ -1,0 +1,62 @@
+<ion-grid class="custom-background-grid">
+  <ion-row style="height: 100%; align-items: center; justify-content: center;">
+    <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="8">
+      <ion-card style="opacity: 85%;">
+        <ion-card-content style="padding: 0; margin: 0;">
+          <ion-grid style="height: 500px; padding: 0; margin: 0;">
+            <ion-row style="height: 100%; align-items: center; justify-content: center;">
+
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="6">
+                <ion-label class="ion-text-center">
+                  <h1 style="font-size: 40px;">Bienvenido a SGestión</h1>
+                  <h2>Ingrese sus credenciales para ingresar al sistema</h2>
+                </ion-label>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="6">
+                <form [formGroup]="loginForm" (ngSubmit)="login()" method="post">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col class="ion-text-center" size-xs="12" size-sm="12" size-md="12" size-lg="12">
+                        <ion-text color="danger">{{ errorMessage }}</ion-text>
+                        <ion-item>
+                          <ion-icon slot="start" name="person"></ion-icon>
+                          <ion-label position="floating">Email</ion-label>
+                          <ion-input formControlName="email"
+                                     type="text"
+                                     name="email"
+                                     id="email"
+                          ></ion-input>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+                        <ion-item>
+                          <ion-icon slot="start" name="key"></ion-icon>
+                          <ion-label position="floating">Password</ion-label>
+                          <ion-input formControlName="password" type="password" name="password" id="password"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+
+                    <ion-row class="ion-text-center">
+                      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+                        <ion-button
+                          fill="solid"
+                          shape="round"
+                          type="submit">
+                          <ion-icon slot="start" name="log-in"></ion-icon>
+                          Entrar
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </form>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

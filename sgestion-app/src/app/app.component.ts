@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,17 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+  public userLoggedIn: boolean;
   public selectedIndex = 0;
-  public appPages = [
+
+  public appSellerPages = [
     {
       title: 'Ventas',
       url: '/sales',
       icon: 'cart'
-    },
+    }
+  ];
+  public appAdminPages = [
     {
       title: 'Inteligencia',
       url: '/intelligence',
@@ -29,9 +34,12 @@ export class AppComponent implements OnInit {
     }
   ];
 
+  public appPages = [];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
+    private router: Router,
     private statusBar: StatusBar
   ) {
     this.initializeApp();
@@ -44,10 +52,12 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  public async ngOnInit() {
+    this.userLoggedIn = false;
     const path = window.location.pathname;
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.url.toLowerCase() === path.toLowerCase());
     }
+    await this.router.navigate(["/", "login"]);
   }
 }
