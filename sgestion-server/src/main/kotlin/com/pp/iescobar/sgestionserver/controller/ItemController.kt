@@ -12,7 +12,6 @@ import kotlin.collections.HashMap
 
 @RestController
 @RequestMapping("/Item")
-@CrossOrigin(origins = ["*"])
 class ItemController @Autowired constructor(
         val itemService: ItemService
 ) {
