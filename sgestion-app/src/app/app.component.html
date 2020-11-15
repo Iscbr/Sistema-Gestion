@@ -1,10 +1,12 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu *ngIf="userLoggedIn" contentId="main-content" type="overlay" style="width: auto;">
+    <ion-menu [hidden]="!userLoggedIn" contentId="main-content" type="overlay" style="width: auto;">
       <ion-content>
-        <ion-list id="inbox-list">
+        <ion-list id="inbox-list" >
           <ion-list-header>SGestión</ion-list-header>
-          <ion-note>Bienvenido</ion-note>
+          <ion-note>
+            Bienvenido {{ user.firstName + ' ' + user.secondName }}
+          </ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
@@ -15,7 +17,21 @@
         </ion-list>
 
       </ion-content>
+
+      <ion-footer>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item button (click)="logout()">
+            <ion-icon slot="start" name="log-out"></ion-icon>
+            <ion-label>
+              Cerrar Sesión
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-footer>
+
     </ion-menu>
+
     <ion-router-outlet id="main-content"></ion-router-outlet>
+
   </ion-split-pane>
 </ion-app>
