@@ -28,6 +28,8 @@ class ResourceServerConfig : ResourceServerConfigurerAdapter() {
                 ?.antMatchers(HttpMethod.GET, "/SaleOrder/Get/{id}")?.hasAnyRole("ADMIN", "SELLER")
                 ?.antMatchers(HttpMethod.POST, "/SaleOrder/save")?.hasAnyRole("ADMIN", "SELLER")
                 ?.antMatchers("/SaleOrder/**")?.hasRole("ADMIN")
+                // Security for controller Intelligence only for Admins
+                ?.antMatchers("/Intelligence/**")?.hasRole("ADMIN")
                 // Any other request must be authenticated
                 ?.anyRequest()?.authenticated()
                 // Configuration Of CORS
