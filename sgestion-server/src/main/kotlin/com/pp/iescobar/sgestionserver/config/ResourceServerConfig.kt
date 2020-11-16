@@ -26,6 +26,7 @@ class ResourceServerConfig : ResourceServerConfigurerAdapter() {
                 // Security for controller SaleOrder
                 ?.antMatchers(HttpMethod.GET, "/SaleOrder/GetAll")?.hasAnyRole("ADMIN", "SELLER")
                 ?.antMatchers(HttpMethod.GET, "/SaleOrder/Get/{id}")?.hasAnyRole("ADMIN", "SELLER")
+                ?.antMatchers(HttpMethod.POST, "/SaleOrder/save")?.hasAnyRole("ADMIN", "SELLER")
                 ?.antMatchers("/SaleOrder/**")?.hasRole("ADMIN")
                 // Any other request must be authenticated
                 ?.anyRequest()?.authenticated()
