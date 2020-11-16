@@ -3,13 +3,14 @@ import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { User } from "../model/user.model";
+import { environment } from "../environments/environment";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
 
-  private readonly oauthTokenUrl = "https://localhost:8443/oauth/token";
+  private readonly oauthTokenUrl = environment.baseUrl + "/oauth/token";
   private headers = new HttpHeaders({
     "Content-Type": "application/x-www-form-urlencoded",
     "Authorization": "Basic " + btoa("sgestion-app:"+"Password")

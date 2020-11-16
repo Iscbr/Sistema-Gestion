@@ -1,45 +1,39 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+
+import { EndpointService } from "./endpoint.service";
 
 import { SaleOrder } from "../model/sale-order.model";
 
 @Injectable({
   providedIn: "root"
 })
-export class SaleOrderService {
-  private saleOrderUrl = "https://localhost:8443/SaleOrder"
+export class SaleOrderService extends EndpointService {
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
-
-  private headers = new HttpHeaders({
-    "Content-Type": "application/json"
-  });
+  private saleOrderUrl = this.baseUrl + "/SaleOrder"
 
   public getAllSaleOrders(): Observable<SaleOrder[]> {
     const url = this.saleOrderUrl + "/GetAll"
-    return this.httpClient.get<SaleOrder[]>(url, { headers: this.headers });
+    return this.http.get<SaleOrder[]>(url, this.resourceHeaders);
   }
 
   public getById(id: String): Observable<SaleOrder> {
     const url = this.saleOrderUrl + "/Get/" + id;
-    return this.httpClient.get<SaleOrder>(url, { headers: this.headers });
+    return this.http.get<SaleOrder>(url, this.resourceHeaders);
   }
 
   public save(saleOrder: SaleOrder): Observable<SaleOrder> {
     const url = this.saleOrderUrl + "/save";
-    return this.httpClient.post<SaleOrder>(url, saleOrder, { headers: this.headers });
+    return this.http.post<SaleOrder>(url, saleOrder, this.resourceHeaders);
   }
 
   public update(id: string, saleOrder: SaleOrder): Observable<any> {
     const url = this.saleOrderUrl + "/update/" + id;
-    return this.httpClient.put<any>(url, saleOrder, { headers: this.headers });
+    return this.http.put<any>(url, saleOrder, this.resourceHeaders);
   }
 
   public disable(id: string): Observable<any> {
     const url = this.saleOrderUrl + "/delete/" + id;
-    return this.httpClient.delete<any>(url,{ headers: this.headers });
+    return this.http.delete<any>(url,this.resourceHeaders);
   }
 }

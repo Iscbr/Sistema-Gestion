@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from "@ionic/angular";
+import { HttpEventType } from "@angular/common/http";
 
 import { UtilUiService } from "../../../services/util/util-ui.service";
 import { ItemService } from "../../../services/item.service";
@@ -44,19 +45,22 @@ export class InventoryUploadCsvPage implements OnInit {
     await this.uiService.showLoadingAlert("Enviando archivo...");
     if (this.csvFile.content !== '') {
       this.itemService.uploadFile(this.file).subscribe(
-        message => {
-          this.uiService.showMessageAlert(
-            false,
-            "Archivo cargado exitósamente",
-            message.message,
-            [
-              {
-                text: "OK",
-                handler: () => this.closeModal("DONE")
-              }
-            ]);
+        response => {
+          if (response.type === HttpEventType.Response) {
+            this.uiService.showMessageAlert(
+              false,
+              "Archivo cargado exitósamente",
+              response.body.message,
+              [
+                {
+                  text: "OK",
+                  handler: () => this.closeModal("DONE")
+                }
+              ]);
+          }
         },
         error => {
+          console.log(error);
           this.uiService.showMessageAlert(
             false,
             "Error al procesar el archivo",
