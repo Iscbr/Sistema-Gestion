@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
+import java.time.LocalDateTime
 import java.util.*
 import javax.transaction.Transactional
 
@@ -47,7 +48,7 @@ class SaleOrderService @Autowired constructor(
     @Transactional
     fun deleteSaleOrder(saleOrder: SaleOrder) {
         saleOrder.active = false
-        saleOrder.disabledDate = Date()
+        saleOrder.disabledDate = LocalDateTime.now()
         saleOrder.disabledBy = "Test"
         createOrUpdateSaleOrder(saleOrder)
     }

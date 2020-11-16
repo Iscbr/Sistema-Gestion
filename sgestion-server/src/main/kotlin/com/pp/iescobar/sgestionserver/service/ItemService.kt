@@ -12,7 +12,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Exception
 import java.lang.RuntimeException
-import java.util.*
+import java.time.LocalDateTime
 import javax.transaction.Transactional
 import kotlin.collections.ArrayList
 
@@ -29,7 +29,7 @@ class ItemService @Autowired constructor(
     @Transactional
     fun createOrUpdateItem(item: Item) : Item {
         if (!item.active) {
-            item.disabledDate = Date()
+            item.disabledDate = LocalDateTime.now()
             item.disabledBy = "Test"
         }
         return itemRepository.save(item)
