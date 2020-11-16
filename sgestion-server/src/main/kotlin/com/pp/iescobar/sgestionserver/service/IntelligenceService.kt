@@ -20,7 +20,7 @@ class IntelligenceService @Autowired constructor(
             salePerDay.numOfSales++
             salePerDay.amount += it.total
         }
-        salePerDay.date = date.toString()
+        salePerDay.day = date.toString()
         salePerDay.hours.sort()
         return salePerDay
     }
