@@ -14,11 +14,8 @@ class IntelligenceController @Autowired constructor(
 ) {
 
     @GetMapping("/Sales/Day/{date}")
-    fun getSalesInOneYear(
+    fun getSalesPerDay(
             @PathVariable("date")
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
-    ): SalePerDay {
-        println(date)
-        return intelligenceService.getSalesPerDay(date)
-    }
+    ): SalePerDay = intelligenceService.getSalesPerDay(date)
 }
