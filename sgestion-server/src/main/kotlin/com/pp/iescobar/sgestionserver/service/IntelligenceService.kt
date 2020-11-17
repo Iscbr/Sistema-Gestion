@@ -15,45 +15,38 @@ class IntelligenceService @Autowired constructor(
 ) {
 
     fun getSalesPerDay(date: LocalDate): SalePerDay {
-        val startDate = LocalDateTime.of(date.year, date.month, date.dayOfMonth, 0, 0, 0)
-        val endDate = LocalDateTime.of(date.year, date.month, date.dayOfMonth, 23, 59, 59)
         val salePerDay = SalePerDay()
-        saleOrderRepository.findAllByCreatedDateBetween(startDate, endDate).forEach {
-            salePerDay.hours.add("${it.createdDate.hour}:${it.createdDate.minute}")
-            salePerDay.numOfSales += 1
-            salePerDay.amount += it.total
+        var startDate: LocalDateTime
+        var endDate: LocalDateTime
+        var salesPerRange: Int
+        for (i in 0..20 step 4) {
+            println(i)
+            startDate = LocalDateTime.of(date.year, date.month, date.dayOfMonth, i, 0, 0)
+            endDate = LocalDateTime.of(date.year, date.month, date.dayOfMonth, i + 3, 59, 59)
+            salesPerRange = 0
+            saleOrderRepository.findAllByCreatedDateBetween(startDate, endDate).forEach {
+                salesPerRange += 1
+                salePerDay.amount += it.total
+            }
+            salePerDay.hourRanges.add("${startDate.hour}:00 - ${endDate.hour}:59")
+            salePerDay.salesPerRange.add(salesPerRange)
         }
         salePerDay.day = date.toString()
-        salePerDay.hours.sort()
+        salePerDay.numOfSales = salePerDay.salesPerRange.sum()
         return salePerDay
     }
 
     fun getSalesPerMonth(yearMonth: String): SalePerMonth {
-        val date = LocalDate.of(yearMonth.split("-")[0].toInt(), yearMonth.split("-")[1].toInt(), 1)
         val salePerMonth = SalePerMonth()
-        val startDate = LocalDateTime.of(date.year, date.month, 1, 0, 0, 0)
-        val endDate = date.withDayOfMonth(date.month.length(date.isLeapYear)).atTime(23, 59, 59)
+        val date = LocalDate.of(yearMonth.split("-")[0].toInt(), yearMonth.split("-")[1].toInt(), 1)
 
-        val days = HashMap<Int, SalePerDay>()
-        saleOrderRepository.findAllByCreatedDateBetween(startDate, endDate).forEach {
-            if (days.containsKey(it.createdDate.dayOfMonth)) {
-                days.getValue(it.createdDate.dayOfMonth).hours.add("${it.createdDate.hour}:${it.createdDate.minute}")
-                days.getValue(it.createdDate.dayOfMonth).hours.sort()
-                days.getValue(it.createdDate.dayOfMonth).numOfSales += 1
-                days.getValue(it.createdDate.dayOfMonth).amount += it.total
-            } else {
-                days[it.createdDate.dayOfMonth] = SalePerDay(
-                        it.createdDate.toLocalDate().toString(),
-                        1,
-                        it.total,
-                        arrayListOf("${it.createdDate.hour}:${it.createdDate.minute}")
-                )
-            }
+        for (i in 1..date.month.length(date.isLeapYear)) {
+            salePerMonth.days.add(getSalesPerDay(date.withDayOfMonth(i)))
         }
+
         salePerMonth.month = date.toString().substringBeforeLast("-")
-        salePerMonth.numOfSales = days.values.sumBy { it.numOfSales }
-        salePerMonth.amount = days.values.sumByDouble { it.amount }
-        salePerMonth.days = days.toSortedMap().values.toList()
+        salePerMonth.numOfSales = salePerMonth.days.sumBy { it.numOfSales }
+        salePerMonth.amount = salePerMonth.days.sumByDouble { it.amount }
         return salePerMonth
     }
 
