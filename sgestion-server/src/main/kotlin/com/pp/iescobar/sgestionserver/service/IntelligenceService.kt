@@ -2,6 +2,7 @@ package com.pp.iescobar.sgestionserver.service
 
 import com.pp.iescobar.sgestionserver.intelligence.SalePerDay
 import com.pp.iescobar.sgestionserver.intelligence.SalePerMonth
+import com.pp.iescobar.sgestionserver.intelligence.SalePerYear
 import com.pp.iescobar.sgestionserver.repository.SaleOrderRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -27,7 +28,8 @@ class IntelligenceService @Autowired constructor(
         return salePerDay
     }
 
-    fun getSalesPerMonth(date: LocalDate): SalePerMonth {
+    fun getSalesPerMonth(yearMonth: String): SalePerMonth {
+        val date = LocalDate.of(yearMonth.split("-")[0].toInt(), yearMonth.split("-")[1].toInt(), 1)
         val salePerMonth = SalePerMonth()
         val startDate = LocalDateTime.of(date.year, date.month, 1, 0, 0, 0)
         val endDate = date.withDayOfMonth(date.month.length(date.isLeapYear)).atTime(23, 59, 59)
@@ -53,6 +55,19 @@ class IntelligenceService @Autowired constructor(
         salePerMonth.amount = days.values.sumByDouble { it.amount }
         salePerMonth.days = days.toSortedMap().values.toList()
         return salePerMonth
+    }
+
+    fun getSalesPerYear(year: Int): SalePerYear {
+        val salePerYear = SalePerYear()
+        var month: String
+        for (i in 1..12) {
+            month = if (i <= 9) "0$i" else i.toString()
+            salePerYear.months.add(getSalesPerMonth("${year}-$month"))
+        }
+        salePerYear.year = year.toString()
+        salePerYear.numOfSales = salePerYear.months.sumBy { it.numOfSales }
+        salePerYear.amount = salePerYear.months.sumByDouble { it.amount }
+        return salePerYear
     }
 
 }

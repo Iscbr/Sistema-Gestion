@@ -2,6 +2,7 @@ package com.pp.iescobar.sgestionserver.controller
 
 import com.pp.iescobar.sgestionserver.intelligence.SalePerDay
 import com.pp.iescobar.sgestionserver.intelligence.SalePerMonth
+import com.pp.iescobar.sgestionserver.intelligence.SalePerYear
 import com.pp.iescobar.sgestionserver.service.IntelligenceService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.format.annotation.DateTimeFormat
@@ -20,9 +21,15 @@ class IntelligenceController @Autowired constructor(
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
     ): SalePerDay = intelligenceService.getSalesPerDay(date)
 
-    @GetMapping("/Sales/Month/{date}")
+    @GetMapping("/Sales/Month/{month}")
     fun getSalesPerMonth(
-            @PathVariable("date")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) date: LocalDate
-    ): SalePerMonth = intelligenceService.getSalesPerMonth(date)
+            @PathVariable("month") yearMonth: String
+    ): SalePerMonth = intelligenceService.getSalesPerMonth(yearMonth)
+
+
+    @GetMapping("/Sales/Year/{year}")
+    fun getSalesPerYear(
+            @PathVariable("year") year: Int
+    ): SalePerYear = intelligenceService.getSalesPerYear(year)
+
 }
