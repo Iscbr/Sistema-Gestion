@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
       this.user = this.authService.user;
       if (this.user.roles.includes("ROLE_ADMIN")) {
         this.appPages = this.appAdminPages;
-        await this.router.navigate(["/", "inventory"]);
+        await this.router.navigate(["/", "intelligence"]);
         this.selectIndex();
       } else if (this.user.roles.includes("ROLE_SELLER")) {
         this.appPages = this.appSellerPages;

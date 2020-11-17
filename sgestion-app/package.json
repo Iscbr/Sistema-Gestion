@@ -1,5 +1,5 @@
 {
-  "name": "Gestion",
+  "name": "gestion",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -24,6 +24,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^5.0.0",
     "@swimlane/ngx-datatable": "^18.0.0",
+    "chart.js": "^2.9.4",
     "ionic-selectable": "^4.7.1",
     "moment": "^2.29.1",
     "rxjs": "~6.5.5",
