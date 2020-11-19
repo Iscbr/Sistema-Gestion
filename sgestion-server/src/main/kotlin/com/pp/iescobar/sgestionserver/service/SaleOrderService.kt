@@ -49,6 +49,8 @@ class SaleOrderService @Autowired constructor(
                     itemRepository.findByIdOrNull(saleOrderLine.itemId)?.let {
                         it.stock += saleOrderLine.quantity
                         itemRepository.save(it)
+                        saleOrderLine.saleOrder = saleOrder
+                        saleOrderLineRepository.save(saleOrderLine)
                     } ?: throw RuntimeException("Item with ID: ${saleOrderLine.itemId} not found.")
                 }
             }
