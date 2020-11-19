@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button *ngIf="loggedUser.roles.includes('ROLE_ADMIN')"
+      <ion-button *ngIf="loggedUser.roles.includes('ROLE_ADMIN') && saleOrder.status !== 'CANCELADA'"
                   fill="solid"
                   color="dark"
                   shape="round"
