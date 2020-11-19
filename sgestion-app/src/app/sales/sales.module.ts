@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'list',
     component: SaleListPage
+  },
+  {
+    path: 'admin/list',
+    component: SaleListPage
   }
 ];
 

@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
+      <ion-button fill="solid"
+                  color="dark"
+                  shape="round"
+                  (click)="cancelSaleOrder()">
+        Cancelar Venta
+      </ion-button>
       <ion-button fill="clear" color="dark" title="Cerrar" (click)="closeModal('CLOSED')">
         <ion-icon name="close" slot="icon-only"></ion-icon>
       </ion-button>
