@@ -26,7 +26,9 @@ export class LoginPage implements OnInit {
     this.loginForm.markAllAsTouched();
   }
 
-  ngOnInit() {
+  ngOnInit() {  }
+
+  ionViewWillEnter() {
     this.errorMessage = "";
   }
 
