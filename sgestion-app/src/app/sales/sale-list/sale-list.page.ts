@@ -9,6 +9,8 @@ import { UtilUiService } from "../../../services/util/util-ui.service";
 
 import { SaleDetailPage } from "../sale-detail/sale-detail.page";
 import { SaleOrder } from "../../../model/sale-order.model";
+import {User} from "../../../model/user.model";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-venta-list',
@@ -23,9 +25,11 @@ export class SaleListPage implements OnInit {
     private uiService: UtilUiService,
     private modalController: ModalController,
     private saleOrderService: SaleOrderService,
+    private authService: AuthService,
   ) { }
 
   public saleOrderList: SaleOrder[];
+  public loggedUser: User;
 
   @ViewChild('ordersTable', { static: false }) ordersTable: DatatableComponent;
   public ColumnMode = ColumnMode;
@@ -33,6 +37,7 @@ export class SaleListPage implements OnInit {
 
   async ngOnInit() {
     this.saleOrderList = [];
+    this.loggedUser = this.authService.user;
   }
 
   async ionViewWillEnter() {

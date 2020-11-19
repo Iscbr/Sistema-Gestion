@@ -1,8 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-      <ion-back-button defaultHref="/sales"
+      <ion-menu-button *ngIf="loggedUser.roles.includes('ROLE_ADMIN')"></ion-menu-button>
+      <ion-back-button *ngIf="loggedUser.roles.includes('ROLE_SELLER')"
+                       defaultHref="/sales"
                        [routerLink]="['/', 'sales']"
                        icon="arrow-back-circle"
                        color="primary">
@@ -133,7 +134,8 @@
             </span>
           </ng-template>
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <span class="mobile-hidden" style="color: green;">{{ value }}</span>
+            <span class="mobile-hidden" *ngIf="value === 'COMPLETADA'" style="color: green;">{{ value }}</span>
+            <span class="mobile-hidden" *ngIf="value === 'CANCELADA'" style="color: red;">{{ value }}</span>
           </ng-template>
         </ngx-datatable-column>
 

@@ -7,6 +7,8 @@ import { UtilDateService } from "../../../services/util/util-date.service";
 import { UtilUiService } from "../../../services/util/util-ui.service";
 
 import { SaleOrder } from "../../../model/sale-order.model";
+import {User} from "../../../model/user.model";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-sale-detail',
@@ -20,12 +22,15 @@ export class SaleDetailPage implements OnInit {
     public dateService: UtilDateService,
     private uiService: UtilUiService,
     private saleOrderService: SaleOrderService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private authService: AuthService
   ) { }
 
   @Input() public saleOrder: SaleOrder;
+  public loggedUser: User;
 
   ngOnInit() {
+    this.loggedUser = this.authService.user;
   }
 
   public async cancelSaleOrder() {
