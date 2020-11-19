@@ -9,7 +9,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
-import java.util.*
 import javax.transaction.Transactional
 
 @Service
@@ -26,23 +25,35 @@ class SaleOrderService @Autowired constructor(
 
     @Transactional
     fun createOrUpdateSaleOrder(saleOrder: SaleOrder) : SaleOrder {
-        val saleOrderSaved = saleOrderRepository.save(saleOrder)
-        var orderLines = saleOrder.orderLines
-        orderLines.forEach { saleOrderLine ->
-            itemRepository.findByIdOrNull(saleOrderLine.itemId)?.let {
-                if (it.stock >= saleOrderLine.quantity) {
-                    it.stock -= saleOrderLine.quantity
-                    itemRepository.save(it)
-                    saleOrderLine.saleOrder = saleOrderSaved
-                    saleOrderLineRepository.save(saleOrderLine)
-                } else {
-                    throw RuntimeException("Insufficient stock for item with ID: ${it.id}")
+        if (saleOrder.id == null) {
+            val saleOrderSaved = saleOrderRepository.save(saleOrder)
+            var orderLines = saleOrder.orderLines
+            orderLines.forEach { saleOrderLine ->
+                itemRepository.findByIdOrNull(saleOrderLine.itemId)?.let {
+                    if (it.stock >= saleOrderLine.quantity) {
+                        it.stock -= saleOrderLine.quantity
+                        itemRepository.save(it)
+                        saleOrderLine.saleOrder = saleOrderSaved
+                        saleOrderLineRepository.save(saleOrderLine)
+                    } else {
+                        throw RuntimeException("Insufficient stock for item with ID: ${it.id}")
+                    }
+                } ?: throw RuntimeException("Item with ID: ${saleOrderLine.itemId} not found.")
+            }
+            orderLines = saleOrderLineRepository.findAllBySaleOrder(saleOrderSaved)
+            saleOrderSaved.orderLines = orderLines
+            return saleOrderSaved
+        } else {
+            if (saleOrder.status == "CANCELADA") {
+                saleOrder.orderLines.forEach { saleOrderLine ->
+                    itemRepository.findByIdOrNull(saleOrderLine.itemId)?.let {
+                        it.stock += saleOrderLine.quantity
+                        itemRepository.save(it)
+                    } ?: throw RuntimeException("Item with ID: ${saleOrderLine.itemId} not found.")
                 }
-            } ?: throw RuntimeException("Item with ID: ${saleOrderLine.itemId} not found.")
+            }
+            return saleOrderRepository.save(saleOrder)
         }
-        orderLines = saleOrderLineRepository.findAllBySaleOrder(saleOrderSaved)
-        saleOrderSaved.orderLines = orderLines
-        return saleOrderSaved
     }
 
     @Transactional
