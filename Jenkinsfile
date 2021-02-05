@@ -6,7 +6,7 @@ pipeline {
       steps {
         echo 'Starting building stage...'
         sh 'cd ./sgestion-server/'
-        sh 'mvn clean'
+        sh 'ls -l'
         sh 'mvn install'
       }
     }
