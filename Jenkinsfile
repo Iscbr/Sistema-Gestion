@@ -5,7 +5,7 @@ pipeline {
       agent any
       steps {
         sh '''cd 
-sgestion-server'''
+sgestion-server/'''
         sh 'mvn clean install'
       }
     }
