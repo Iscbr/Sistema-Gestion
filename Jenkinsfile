@@ -4,8 +4,8 @@ pipeline {
     stage('Build') {
       agent any
       steps {
-        sh '''cd 
-sgestion-server/'''
+        echo 'Starting building stage...'
+        sh 'ls -l'
         sh 'mvn clean install'
       }
     }
